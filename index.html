@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeEngine</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --bg: #0a0a0a;
+            --card: #111;
+            --border: #222;
+            --text: #fff;
+            --dim: #888;
+            --green: #00ff88;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .app {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .logo { font-size: 60px; }
+        
+        h1 {
+            font-size: 28px;
+            margin-top: 16px;
+        }
+        
+        h1 span { color: var(--green); }
+        
+        .tagline {
+            color: var(--dim);
+            margin-top: 8px;
+        }
+        
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        textarea, input {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 12px;
+            resize: vertical;
+        }
+        
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        
+        textarea::placeholder, input::placeholder { color: var(--dim); }
+        
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--green);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .btn:hover { opacity: 0.9; }
+        .btn:disabled { opacity: 0.5; cursor: wait; }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            margin-top: 10px;
+        }
+        
+        .result {
+            border-color: var(--green);
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .score {
+            width: 60px;
+            height: 60px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 700;
+        }
+        
+        .score-num { font-size: 22px; }
+        .score-label { font-size: 9px; }
+        
+        .result-info h2 { font-size: 18px; }
+        .result-info p { color: var(--dim); font-size: 14px; }
+        
+        .time {
+            margin-left: auto;
+            text-align: right;
+            color: var(--green);
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .resume-output {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--dim);
+            white-space: pre-wrap;
+            margin-bottom: 16px;
+        }
+        
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .hidden { display: none !important; }
+        
+        .loading {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .loading-timer {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--green);
+        }
+        
+        .loading-text {
+            color: var(--dim);
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        
+        .status {
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .status.success { background: rgba(0,255,136,0.1); color: var(--green); }
+        .status.error { background: rgba(255,0,0,0.1); color: #f55; }
+    </style>
+</head>
+<body>
+    <div class="loading hidden" id="loading">
+        <div class="loading-timer" id="timer">0.0s</div>
+        <div class="loading-text">Tailoring your resume...</div>
+    </div>
+    
+    <div class="app">
+        <header>
+            <div class="logo">⚡</div>
+            <h1>Resume<span>Engine</span></h1>
+            <p class="tagline">Paste Job Description → Get Tailored Resume</p>
+        </header>
+        
+        <!-- Your Resume -->
+        <div class="card">
+            <div class="card-title">📝 Your Master Resume</div>
+            <textarea id="resume" rows="8" placeholder="Paste your full resume here..."></textarea>
+            <button class="btn" id="saveBtn">💾 Save Resume</button>
+            <div class="status hidden" id="saveStatus"></div>
+        </div>
+        
+        <!-- Job Description -->
+        <div class="card" id="inputCard">
+            <div class="card-title">📋 Job Description</div>
+            <textarea id="jobDesc" rows="6" placeholder="Paste the job description here..."></textarea>
+            <button class="btn" id="tailorBtn">⚡ Tailor My Resume</button>
+        </div>
+        
+        <!-- Result -->
+        <div class="card result hidden" id="resultCard">
+            <div class="result-header">
+                <div class="score">
+                    <span class="score-num" id="scoreNum">0</span>
+                    <span class="score-label">MATCH</span>
+                </div>
+                <div class="result-info">
+                    <h2 id="jobTitle">Position</h2>
+                    <p id="jobCompany">Tailored Resume</p>
+                </div>
+                <div class="time" id="totalTime">0.0s</div>
+            </div>
+            <div class="resume-output" id="output"></div>
+            <div class="actions">
+                <button class="btn" id="copyBtn">📋 Copy</button>
+                <button class="btn btn-secondary" id="resetBtn">🔄 Again</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Gemini API Key
+        const API_KEY = 'AIzaSyDEqZDj5NWW95qhVJ6tBbuPVO_YDJf2Mw0';
+        const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+        
+        let timer = null;
+        let startTime = 0;
+        
+        // Load saved resume
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('masterResume');
+            if (saved) {
+                document.getElementById('resume').value = saved;
+                showStatus('saveStatus', '✓ Resume loaded', 'success');
+            }
+        });
+        
+        // Save resume
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            const resume = document.getElementById('resume').value;
+            localStorage.setItem('masterResume', resume);
+            showStatus('saveStatus', '✓ Saved!', 'success');
+        });
+        
+        // Tailor
+        document.getElementById('tailorBtn').addEventListener('click', tailor);
+        
+        async function tailor() {
+            const resume = document.getElementById('resume').value.trim();
+            const jobDesc = document.getElementById('jobDesc').value.trim();
+            
+            if (!resume) return alert('Add your resume first');
+            if (!jobDesc) return alert('Paste a job description');
+            
+            // Show loading
+            document.getElementById('loading').classList.remove('hidden');
+            startTime = performance.now();
+            timer = setInterval(() => {
+                const elapsed = (performance.now() - startTime) / 1000;
+                document.getElementById('timer').textContent = elapsed.toFixed(1) + 's';
+            }, 100);
+            
+            try {
+                const prompt = `Tailor this resume for the job. Use XYZ format for bullets (Accomplished X, measured by Y, by doing Z).
+
+RESUME:
+${resume.substring(0, 3500)}
+
+JOB DESCRIPTION:
+${jobDesc.substring(0, 2000)}
+
+Return JSON only:
+{"tailored_resume": "Full tailored resume text", "compatibility_score": 0-100, "job_title": "extracted job title"}`;
+
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) throw new Error(data.error.message);
+                
+                let text = data.candidates[0].content.parts[0].text;
+                
+                // Parse JSON
+                if (text.includes('```json')) {
+                    text = text.split('```json')[1].split('```')[0];
+                } else if (text.includes('```')) {
+                    text = text.split('```')[1].split('```')[0];
+                }
+                
+                const result = JSON.parse(text.trim());
+                
+                // Stop timer
+                clearInterval(timer);
+                const totalTime = (performance.now() - startTime) / 1000;
+                
+                // Show result
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('inputCard').classList.add('hidden');
+                document.getElementById('resultCard').classList.remove('hidden');
+                
+                document.getElementById('scoreNum').textContent = result.compatibility_score || 0;
+                document.getElementById('jobTitle').textContent = result.job_title || 'Tailored Resume';
+                document.getElementById('totalTime').textContent = totalTime.toFixed(1) + 's';
+                document.getElementById('output').textContent = result.tailored_resume || '';
+                
+            } catch (err) {
+                clearInterval(timer);
+                document.getElementById('loading').classList.add('hidden');
+                alert('Error: ' + err.message);
+            }
+        }
+        
+        // Copy
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const text = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(text);
+            document.getElementById('copyBtn').textContent = '✓ Copied!';
+            setTimeout(() => document.getElementById('copyBtn').textContent = '📋 Copy', 2000);
+        });
+        
+        // Reset
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            document.getElementById('resultCard').classList.add('hidden');
+            document.getElementById('inputCard').classList.remove('hidden');
+            document.getElementById('jobDesc').value = '';
+        });
+        
+        function showStatus(id, msg, type) {
+            const el = document.getElementById(id);
+            el.textContent = msg;
+            el.className = 'status ' + type;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 3000);
+        }
+    </script>
+</body>
+</html>
+
