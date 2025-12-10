@@ -1,5 +1,7 @@
 # Environment
 .env
+.env.*
+!.env.example
 venv/
 __pycache__/
 *.pyc
@@ -10,6 +12,7 @@ data/
 # IDE
 .vscode/
 .idea/
+.cursor/
 
 # OS
 .DS_Store
@@ -17,4 +20,7 @@ data/
 # Temp
 *.pdf
 *.tmp
+
+# APM (optional - can keep for reference)
+# .apm/
 
