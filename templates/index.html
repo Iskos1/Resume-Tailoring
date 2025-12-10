@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeEngine</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --bg: #0a0a0a;
+            --card: #111;
+            --border: #222;
+            --text: #fff;
+            --dim: #888;
+            --green: #00ff88;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        .app {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .logo { font-size: 60px; }
+        
+        h1 {
+            font-size: 28px;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+        
+        h1 span { color: var(--green); }
+        
+        .tagline {
+            color: var(--dim);
+            margin-top: 8px;
+        }
+        
+        /* Timer */
+        .timer {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--green);
+            text-align: center;
+            padding: 20px;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .timer.hidden { display: none; }
+        
+        /* Input */
+        .input-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        
+        .url-input {
+            width: 100%;
+            padding: 16px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .url-input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        
+        .url-input::placeholder { color: var(--dim); }
+        
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--green);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .btn:hover { opacity: 0.9; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Result */
+        .result {
+            margin-top: 24px;
+            background: var(--card);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .result.hidden { display: none; }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(0,255,136,0.05);
+        }
+        
+        .score {
+            width: 64px;
+            height: 64px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 700;
+        }
+        
+        .score-num { font-size: 24px; line-height: 1; }
+        .score-label { font-size: 10px; }
+        
+        .job-info h2 { font-size: 18px; }
+        .job-info p { color: var(--dim); font-size: 14px; }
+        
+        .time-badge {
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .time-badge .time {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--green);
+        }
+        
+        .time-badge .label {
+            font-size: 10px;
+            color: var(--dim);
+        }
+        
+        .resume-text {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--dim);
+            white-space: pre-wrap;
+            background: var(--bg);
+        }
+        
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 20px;
+        }
+        
+        .actions .btn { font-size: 14px; padding: 14px; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        
+        .reset-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 16px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--dim);
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        /* Resume Setup */
+        .setup {
+            margin-top: 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+        
+        .setup-header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .setup.open .setup-header { border-bottom-color: var(--border); }
+        
+        .setup-title { flex: 1; font-weight: 500; }
+        .setup-badge {
+            background: var(--green);
+            color: #000;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        .setup-badge.hidden { display: none; }
+        
+        .setup-arrow { color: var(--dim); transition: transform 0.2s; }
+        .setup.open .setup-arrow { transform: rotate(180deg); }
+        
+        .setup-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .setup.open .setup-content { display: block; }
+        
+        .setup textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 12px;
+        }
+        
+        .setup textarea:focus { outline: none; border-color: var(--green); }
+        
+        .status {
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+        
+        .status.success { background: rgba(0,255,136,0.1); color: var(--green); }
+        .status.error { background: rgba(255,0,0,0.1); color: #f55; }
+        .status.hidden { display: none; }
+        
+        /* Loading */
+        .loading {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .loading.hidden { display: none; }
+        
+        .loading-timer {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--green);
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .loading-status {
+            color: var(--dim);
+            margin-top: 24px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading hidden" id="loading">
+        <div class="loading-timer" id="loadingTimer">0.0s</div>
+        <div class="loading-status" id="loadingStatus">Scraping job...</div>
+    </div>
+    
+    <div class="app">
+        <header>
+            <div class="logo">⚡</div>
+            <h1>Resume<span>Engine</span></h1>
+            <p class="tagline">Paste URL → Get Tailored Resume</p>
+        </header>
+        
+        <!-- Main Input -->
+        <div class="input-card" id="inputCard">
+            <input 
+                type="url" 
+                class="url-input" 
+                id="urlInput" 
+                placeholder="Paste job URL here..."
+                autofocus
+            >
+            <button class="btn" id="tailorBtn">⚡ Tailor My Resume</button>
+        </div>
+        
+        <!-- Result -->
+        <div class="result hidden" id="result">
+            <div class="result-header">
+                <div class="score">
+                    <span class="score-num" id="scoreNum">0</span>
+                    <span class="score-label">MATCH</span>
+                </div>
+                <div class="job-info">
+                    <h2 id="jobTitle">Position</h2>
+                    <p id="jobCompany">at Company</p>
+                </div>
+                <div class="time-badge">
+                    <div class="time" id="totalTime">0.0s</div>
+                    <div class="label">TOTAL TIME</div>
+                </div>
+            </div>
+            <div class="resume-text" id="resumeText"></div>
+            <div class="actions">
+                <button class="btn" id="downloadBtn">📄 Download PDF</button>
+                <button class="btn btn-outline" id="copyBtn">📋 Copy</button>
+            </div>
+            <button class="reset-btn" id="resetBtn">🔄 Tailor Another</button>
+        </div>
+        
+        <!-- Master Resume Setup -->
+        <div class="setup" id="setup">
+            <div class="setup-header" onclick="toggleSetup()">
+                <span>📝</span>
+                <span class="setup-title">Your Resume</span>
+                <span class="setup-badge hidden" id="savedBadge">✓ Saved</span>
+                <span class="setup-arrow">▼</span>
+            </div>
+            <div class="setup-content">
+                <textarea id="resumeInput" placeholder="Paste your full resume here..."></textarea>
+                <button class="btn" id="saveBtn">💾 Save Resume</button>
+                <div class="status hidden" id="saveStatus"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // State
+        let timer = null;
+        let startTime = 0;
+        let result = null;
+        
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            loadResume();
+            document.getElementById('urlInput').focus();
+        });
+        
+        // Timer
+        function startTimer() {
+            startTime = performance.now();
+            timer = setInterval(() => {
+                const elapsed = (performance.now() - startTime) / 1000;
+                document.getElementById('loadingTimer').textContent = elapsed.toFixed(1) + 's';
+            }, 100);
+        }
+        
+        function stopTimer() {
+            clearInterval(timer);
+            return (performance.now() - startTime) / 1000;
+        }
+        
+        // Main tailor function
+        document.getElementById('tailorBtn').addEventListener('click', tailor);
+        document.getElementById('urlInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') tailor();
+        });
+        
+        async function tailor() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) return alert('Paste a job URL');
+            
+            const resume = document.getElementById('resumeInput').value.trim();
+            if (!resume) {
+                alert('Add your resume first');
+                document.getElementById('setup').classList.add('open');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('loadingStatus').textContent = 'Scraping job...';
+            startTimer();
+            
+            try {
+                const res = await fetch('/api/quick-tailor', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ job_url: url })
+                });
+                
+                document.getElementById('loadingStatus').textContent = 'Tailoring resume...';
+                
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+                
+                const totalTime = stopTimer();
+                result = data;
+                
+                // Show result
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('inputCard').style.display = 'none';
+                document.getElementById('result').classList.remove('hidden');
+                
+                document.getElementById('scoreNum').textContent = data.compatibility_score || 0;
+                document.getElementById('jobTitle').textContent = data.job_title || 'Position';
+                document.getElementById('jobCompany').textContent = 'at ' + (data.company || 'Company');
+                document.getElementById('totalTime').textContent = totalTime.toFixed(1) + 's';
+                document.getElementById('resumeText').textContent = data.tailored_resume || '';
+                
+            } catch (err) {
+                stopTimer();
+                document.getElementById('loading').classList.add('hidden');
+                alert(err.message);
+            }
+        }
+        
+        // Actions
+        document.getElementById('downloadBtn').addEventListener('click', async () => {
+            if (!result) return;
+            const res = await fetch('/api/download-pdf', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ resume_content: result.tailored_resume })
+            });
+            const blob = await res.blob();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Resume_${result.job_title || 'Tailored'}.pdf`;
+            a.click();
+        });
+        
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            if (!result) return;
+            navigator.clipboard.writeText(result.tailored_resume);
+            document.getElementById('copyBtn').textContent = '✓ Copied';
+            setTimeout(() => document.getElementById('copyBtn').textContent = '📋 Copy', 2000);
+        });
+        
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('inputCard').style.display = 'block';
+            document.getElementById('urlInput').value = '';
+            document.getElementById('urlInput').focus();
+            result = null;
+        });
+        
+        // Resume setup
+        function toggleSetup() {
+            document.getElementById('setup').classList.toggle('open');
+        }
+        
+        async function loadResume() {
+            try {
+                const res = await fetch('/api/master-resume');
+                const data = await res.json();
+                if (data.content) {
+                    document.getElementById('resumeInput').value = data.content;
+                    document.getElementById('savedBadge').classList.remove('hidden');
+                } else {
+                    document.getElementById('setup').classList.add('open');
+                }
+            } catch (e) {}
+        }
+        
+        document.getElementById('saveBtn').addEventListener('click', async () => {
+            const content = document.getElementById('resumeInput').value;
+            const btn = document.getElementById('saveBtn');
+            const status = document.getElementById('saveStatus');
+            
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+            
+            try {
+                await fetch('/api/master-resume', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ content })
+                });
+                
+                status.textContent = '✓ Saved!';
+                status.className = 'status success';
+                status.classList.remove('hidden');
+                document.getElementById('savedBadge').classList.remove('hidden');
+                setTimeout(() => status.classList.add('hidden'), 2000);
+            } catch (e) {
+                status.textContent = 'Failed';
+                status.className = 'status error';
+                status.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '💾 Save Resume';
+            }
+        });
+    </script>
+</body>
+</html>
