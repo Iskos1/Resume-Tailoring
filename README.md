@@ -2,6 +2,10 @@
 
 An AI-powered resume builder that uses OpenAI to automatically tailor your resume to specific job descriptions.
 
+## 🌐 Live Demo
+
+**Coming Soon**: Deploy your own instance following the [Deployment Guide](DEPLOYMENT.md)
+
 ## Features
 
 - 📝 **Resume Editor**: Comprehensive form to edit all sections of your resume
@@ -9,7 +13,7 @@ An AI-powered resume builder that uses OpenAI to automatically tailor your resum
 - 📄 **PDF Export**: Download your tailored resume as a PDF
 - 💾 **Auto-Save**: Your resume data is automatically saved locally
 
-## Setup Instructions
+## Quick Start
 
 ### 1. Install Dependencies
 
@@ -19,23 +23,16 @@ npm install
 
 ### 2. Configure OpenAI API Key
 
-You need an OpenAI API key to use the AI tailoring feature.
+Create a `.env` file in the root directory:
 
-**Option A: Using .env file (Recommended)**
+```bash
+cp .env.example .env
+```
 
-1. Create a `.env` file in the root directory:
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Edit `.env` and add your OpenAI API key:
-   ```
-   OPENAI_API_KEY=your-actual-api-key-here
-   ```
-
-**Option B: Directly in server.js**
-
-The API key is already configured in `server.js` as a fallback. However, for security reasons, it's better to use a `.env` file.
+Edit `.env` and add your OpenAI API key:
+```
+OPENAI_API_KEY=your-actual-api-key-here
+```
 
 ### 3. Start the Server
 
@@ -44,6 +41,18 @@ npm start
 ```
 
 The application will start on `http://localhost:5001`
+
+## 🚀 Deployment
+
+This application is ready to deploy to multiple platforms. See the [**Deployment Guide**](DEPLOYMENT.md) for detailed instructions.
+
+**Recommended Platforms**:
+- ⭐ [Render.com](https://render.com) - Free tier, easy setup
+- [Railway.app](https://railway.app) - $5 free credit, instant deploy  
+- [Vercel](https://vercel.com) - Serverless, fast
+- [Heroku](https://heroku.com) - Classic platform
+
+All platforms support one-click deployment from this GitHub repository!
 
 ## Usage
 
