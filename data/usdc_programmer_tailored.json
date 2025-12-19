@@ -1,0 +1,114 @@
+{
+  "name": "Jawad Iskandar",
+  "contact": {
+    "email": "Jawad.iskandar@outlook.com",
+    "phone": "(571) 269-8465",
+    "github": "github.com/Iskos1",
+    "linkedin": "linkedin.com/in/jawad-iskandar"
+  },
+  "sectionNames": {
+    "tailor": "AI Resume Tailor",
+    "personal": "Personal Information",
+    "skills": "Technical Skills",
+    "experience": "Professional Experience",
+    "education": "Education",
+    "projects": "Systems Administration & Development Projects",
+    "awards": "Certifications"
+  },
+  "sectionOrder": [
+    "skills",
+    "experience",
+    "projects",
+    "education",
+    "awards"
+  ],
+  "skills": [
+    {
+      "category": "Cloud & Systems Administration",
+      "items": "AWS (VPC, EC2, S3), Azure (VMs, Blob Storage), Site-to-Site VPN, Network ACLs, Security Groups, Access Control (RBAC/IAM concepts), Remote Administration (RDP)"
+    },
+    {
+      "category": "Programming & Automation",
+      "items": "Python, SQL, JavaScript, HTML/CSS, JSON policy authoring, ETL processes, data pipelines, data validation"
+    },
+    {
+      "category": "Data, Reporting & Visualization",
+      "items": "Pandas, NumPy, GeoPandas, Tableau, Power BI, Matplotlib, Folium, Chart.js, Excel, Google Analytics"
+    },
+    {
+      "category": "Tools & Methods",
+      "items": "Git/GitHub, Jupyter, scikit-learn, Machine Learning Pipelines, Prompt Engineering, Requirements gathering, Documentation & training"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Handshake AI",
+      "location": "Remote",
+      "title": "AI Training Specialist",
+      "dates": "December 2025 - Present",
+      "bullets": [
+        "Evaluate technical outputs for accuracy, relevance, and quality using structured review workflows and detailed written feedback.",
+        "Collaborate with distributed teams and meet strict quality standards and deadlines in a remote environment.",
+        "Document findings and recommendations to support iterative improvements and reliable system behavior."
+      ],
+      "techStack": "AI Model Evaluation, Data Annotation, Quality Assessment, AI Training Workflows",
+      "enabled": true
+    },
+    {
+      "company": "Apple",
+      "location": "Fairoaks, VA",
+      "title": "Business Specialist",
+      "dates": "Sep 2021 - Jun 2024",
+      "bullets": [
+        "Delivered technology solutions for 50+ small and mid-sized business clients, increasing ROI by 18% and improving workflow efficiency by 30% through migrations to integrated Apple ecosystems and cloud solutions (iCloud, Apple Business Manager, third-party SaaS).",
+        "Conducted needs analyses, on-site consultations, and workshops; translated technical topics (device deployment, security, mobile workflows, productivity) into clear guidance for non-technical stakeholders.",
+        "Supported device deployment and management by leveraging Apple Business Manager and MDM systems (e.g., Jamf) to implement scalable configurations aligned to business requirements.",
+        "Improved quarterly forecasting accuracy by 25% by maintaining precise CRM data (Salesforce, Apple CRM) and tracking performance trends to refine pipeline strategies.",
+        "Mentored team members and collaborated cross-functionally on business events and trainings; consistently exceeded customer satisfaction and solution adoption KPIs."
+      ],
+      "techStack": "Apple Business Manager, Jamf (MDM), iCloud, SaaS integrations, CRM (Salesforce, Apple CRM)",
+      "enabled": true
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.S. Business Administration",
+      "institution": "George Mason University",
+      "dates": "December 2025",
+      "gpa": "GPA: 3.78/4.0",
+      "coursework": "Cloud Computing Essentials, Systems Analysis and Design, Information Systems Audit and Control, Data Mining for Business Applications, Programming for Analytics"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cloud Computing Projects (AWS & Azure)",
+      "year": "2025",
+      "description": "Improved multi-cloud security, reliability, and storage efficiency by 35–100% across AWS and Azure environments through end-to-end hands-on configuration.\n\nDesigned and deployed 3+ AWS VPC architectures with CIDR planning, custom subnets, route tables, Internet Gateways, and 2 Site-to-Site VPN tunnels using CGWs, VGWs, and IKEv1 configurations.\n\nStrengthened network protection by implementing 20+ Network ACL rules and creating 6+ Security Groups with IP-restricted SSH/RDP access.\n\nManaged S3 versioning and authored JSON bucket policies; configured Azure Storage Accounts/Blob Containers and used snapshots to validate recovery with zero-data-loss restores.\n\nTechnologies/Skills: AWS (VPC, EC2, S3), VPN (CGW/VGW, IKEv1), NACLs, Security Groups, JSON bucket policies, Azure (VMs, Storage Accounts, Blob Storage, Snapshots), Access control (RBAC/IAM concepts).",
+      "enabled": true,
+      "useBullets": false
+    },
+    {
+      "name": "Interactive U.S. COVID-19 Data Pipeline & Visualization",
+      "year": "2025",
+      "description": "Built a Python ETL pipeline that processed 3,000+ U.S. counties worth of COVID-19 data, improving data accessibility by 90% through automated cleaning and visualization.\n\nAutomated ingestion of live datasets and transformed time-series data into analysis-ready formats, reducing manual refresh effort to seconds.\n\nDesigned interactive summaries and dashboards to support rapid end-user analysis and improved interpretability of trends.\n\nDelivered a reproducible Jupyter workflow with reliable outputs and clear documentation for reuse.\n\nTechnologies/Skills: Python, Pandas, GeoPandas, Folium, Matplotlib, Jupyter, ETL, Data wrangling, Time-series analysis.",
+      "enabled": true,
+      "useBullets": false
+    },
+    {
+      "name": "StatementProMax — Bank Statement Converter & Financial Analysis Platform",
+      "year": "2025",
+      "description": "Designed and developed a client-side web application for bank statement conversion and financial analysis using only browser-based technologies.\n\nBuilt a PDF → Excel conversion workflow and multi-sheet exports to support reporting and review.\n\nImplemented an interactive dashboard and local-only storage to support secure, user-friendly analysis.\n\nDeployed and maintained a public demo and documentation to improve usability and maintainability.\n\nTechnologies/Skills: JavaScript (ES6), HTML/CSS, Chart.js, SheetJS (XLSX), IndexedDB, LocalStorage, GitHub Pages.",
+      "enabled": true,
+      "useBullets": false
+    }
+  ],
+  "awards": [
+    "Introduction to Python",
+    "Intermediate Python",
+    "Introduction to R",
+    "Introduction to Data Science in Python",
+    "Introduction to the Tidyverse",
+    "Google Analytics"
+  ],
+  "showGpa": true
+}

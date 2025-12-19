@@ -1,0 +1,148 @@
+{
+  "name": "Jawad Iskandar",
+  "contact": {
+    "email": "Jawad.iskandar@outlook.com",
+    "phone": "(571) 269 - 8465",
+    "github": "Github.com/Iskos1",
+    "linkedin": "Linkedin.com/in/jawad-iskandar/"
+  },
+  "sectionNames": {
+    "tailor": "AI Resume Tailor",
+    "personal": "Personal Information",
+    "skills": "Skills",
+    "experience": "Work Experience",
+    "education": "Education",
+    "projects": "Projects",
+    "awards": "Awards & Certificates"
+  },
+  "skills": [
+    {
+      "category": "Business Analysis",
+      "items": "Requirements Gathering (Elicitation), Stakeholder Management, Workshop/Meeting Facilitation, Process Mapping/Flows, Gap Analysis, SWOT Analysis, Documentation & Change Logs, UAT Support, Cross-Functional Communication"
+    },
+    {
+      "category": "Data & Tools",
+      "items": "Excel, SQL (academic), CRM (Salesforce), Reporting & Forecasting, Tableau/Power BI (academic/projects), Python/R (projects), Documentation (Word/Google Docs)"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Handshake AI",
+      "location": "Remote",
+      "title": "AI Training Specialist",
+      "dates": "December 2025 - Present",
+      "bullets": [
+        "Contributing domain expertise to train and refine cutting-edge AI models through data annotation, evaluation, and feedback on model outputs across diverse subject areas.",
+        "Evaluating AI-generated responses for accuracy, relevance, and quality to improve how AI systems understand and process complex domain-specific concepts.",
+        "Collaborating with leading AI labs and a community of 100K+ experts to challenge AI models and provide expert-level critique that shapes AI development.",
+        "Participating in remote, flexible project-based work (up to 20 hours/week) while gaining hands-on experience with AI model training workflows and methodologies.",
+        "Building practical AI skills through structured tasks and professional feedback from PhD-level reviewers, contributing to the advancement of AI capabilities."
+      ],
+      "techStack": "AI Model Evaluation, Data Annotation, Quality Assessment, AI Training Workflows",
+      "enabled": false
+    },
+    {
+      "bullets": [
+        "Gathered and clarified business needs for 50+ small/mid-sized clients via discovery calls, onsite consultations, and workshops; translated requirements into clear solution recommendations and implementation steps.",
+        "Improved workflow efficiency by ~30% by identifying current-state friction points and guiding customers through streamlined device + cloud workflows (process improvement mindset).",
+        "Supported decision-making with basic reporting by tracking pipeline activity and performance trends in CRM; improved forecasting accuracy by ~25% through clean data entry and consistent documentation. ",
+        "Coordinated with cross-functional teams to ensure requirements and constraints were understood; aligned stakeholders on next steps to reduce rework and improve delivery consistency.",
+        "Maintained accurate stakeholder and engagement records in Salesforce/Apple CRM, supporting follow-ups, change tracking, and ongoing account management.",
+        "Presented solutions in client-facing sessions and workshops; adapted communication style for business owners, executives, and technical teams to drive alignment and adoption."
+      ],
+      "company": "Apple",
+      "dates": "Sep 2021 - Jun 2024",
+      "location": "Fairoaks, VA",
+      "techStack": "",
+      "title": "Business Specialist (B2B/SMB)",
+      "enabled": true
+    }
+  ],
+  "education": [
+    {
+      "coursework": "Cloud Computing Essentials, Data Mining for Business Applications, Information Systems Audit and Control, Systems Analysis and Design, Programming for Analytics",
+      "dates": "December 2025",
+      "degree": "B.S Business Administration",
+      "gpa": "GPA: 3.78/4.0",
+      "institution": "George Mason Univeristy"
+    }
+  ],
+  "projects": [
+    {
+      "description": "Improved multi-cloud security, reliability, and storage efficiency by 35–100% across AWS and Azure environments through end-to-end hands-on configuration.\n\n\n\nDesigned and deployed 3+ AWS VPC architectures with CIDR planning, custom subnets, route tables, Internet Gateways, and 2 Site-to-Site VPN tunnels using CGWs, VGWs, and IKEv1 configurations.\n\n\n\nStrengthened network protection by implementing 20+ Network ACL rules and creating 6+ Security Groups with IP-restricted SSH/RDP access, reducing unauthorized access risk by 40–50%.\n\n\n\nLaunched and validated 6+ EC2 instances across 3 custom VPCs, improving routing accuracy and understanding of public vs. private IP behavior by 30%.\n\n\n\nManaged 4+ S3 buckets, enabling versioning and restoring 100% of deleted files via delete markers; authored 5+ JSON bucket policies, reducing misconfiguration risks by 90%.\n\n\n\nExecuted 10+ access-control test scenarios using Block Public Access settings, ACLs, and object-level permissions to validate least-privilege security.\n\n\n\nProvisioned 2 Azure Storage Accounts with LRS redundancy, increasing data durability through 3x replication within the region.\n\n\n\nConfigured 3+ Azure Blob Containers with Private, Blob, and Container permissions, improving structured data access by 100%.\n\n\n\nCreated, edited, and restored multiple Azure Blob Snapshots, achieving zero-data-loss recovery and demonstrating end-to-end versioning.\n\n\n\nApplied cross-platform cloud principles—versioning, redundancy, lifecycle management, and RBAC—to improve multi-cloud operational consistency by ~35%.\n\n\nAWS EC2 Virtual Machine Deployment Project\n\nDeployed a Windows Server virtual machine in AWS EC2, selecting an appropriate AMI and instance type based on compute sizing requirements (CPU, memory, and cost).\n\nCreated and managed an RSA key pair (.pem) for secure instance access, demonstrating understanding of cloud authentication and key-based security.\n\nLaunched and validated the VM using default networking configurations, reviewing VPC, subnet, availability zone, and security group associations.\n\nRetrieved and analyzed private and public IP addresses to understand cloud networking behavior and remote access requirements.\n\nEstablished RDP (Remote Desktop Protocol) connectivity to the Windows Server instance, including password decryption using the private key.\n\nVerified instance runtime status and system accessibility through the AWS EC2 console and remote desktop session.\n\nProperly terminated the EC2 instance after use to prevent unnecessary resource consumption and avoid ongoing costs.\n\n\n\nAzure Virtual Machine Deployment Project\n\nDeployed a Windows Server virtual machine in Microsoft Azure, following standard cloud VM provisioning workflows.\n\nCreated and managed an Azure Resource Group to logically organize compute, networking, and storage resources with a shared lifecycle.\n\nSelected a Windows Server image from the Azure Marketplace and configured an appropriate B1s VM size based on compute and cost considerations.\n\nConfigured local administrator credentials and enabled RDP (Remote Desktop Protocol) for secure remote access.\n\nReviewed and validated VM configuration settings prior to deployment using Azure’s built-in validation process.\n\nIdentified and verified the VM’s public IP address for remote connectivity and management.\n\nSuccessfully connected to the VM via RDP, confirming system availability and OS accessibility.\n\nPerformed proper resource cleanup by deleting the resource group, ensuring all associated resources were removed to prevent ongoing costs.\n\n\nSkills & Tools: AWS VPC, Route Tables, VPN (CGW/VGW), EC2, NACLs, Security Groups, S3, Bucket Policies (JSON), S3 Versioning & Delete Markers, Azure Storage Accounts, Azure Blob Storage, Snapshots, IAM concepts, Public/Private networking.",
+      "name": "Cloud Computing Projects (AWS & Azure)",
+      "year": "2025",
+      "enabled": false,
+      "useBullets": false
+    },
+    {
+      "description": "Delivered a consulting-style analysis and recommendations using PESTEL, Porter’s Five Forces, VRIO, KPIs, phased roadmap, and risk mitigation—mirroring BA-style documentation and stakeholder-ready reporting.",
+      "name": "Strategy Development Consulting Report - Capstone",
+      "year": "2025",
+      "enabled": true,
+      "useBullets": false
+    },
+    {
+      "description": "Built an e-commerce business end-to-end, including product research, supplier verification, licensing, site development, SEO, and scaling operations.\n\n\n\nDiscovered 20+ high-value product keywords and identified profitable niches using Ahrefs, Semrush, and Google Trends, increasing organic visibility and search ranking potential.\n\n\n\nDesigned and launched a custom Shopify store using Liquid, HTML, CSS, JavaScript, and Figma wireframes, improving site load speed, structure, and conversion-focused design.\n\n\n\nCreated keyword-rich landing pages and collection pages, increasing organic click-through rates by 40% and boosting user retention by 25% through clean UI and simplified navigation.\n\n\n\nScaled organic traffic from 500 to 90K+ monthly visitors and revenue from $0 to $1,000 per day within 6 months by executing a data-driven SEO and content strategy.\n\n\n\nImproved UI/UX by redesigning layouts, enhancing mobile responsiveness, and optimizing user flows, resulting in higher engagement and lower bounce rates.\n\n\n\nBuilt internal linking structures, fixed indexing issues, and monitored performance through Google Search Console, improving keyword ranking stability and rich-snippet eligibility.\n\n\n\nCreated product descriptions, comparison charts, and SEO-optimized blog posts to capture high-intent customers and increase top-funnel traffic.\n\n\n\nUsed analytics tools (Ahrefs, Semrush, Search Console) to track KPIs, refine keywords, and continuously adjust strategy based on competition and algorithm shifts.\n\n\n\nManaged end-to-end business operations including supplier onboarding, quality verification, profit margin analysis, and inventory planning.\n\n\n\nAhrefs, Semrush, Google Trends, Shopify, Liquid, HTML, CSS, JavaScript, Google Search Console, Figma",
+      "name": "Dispomode.com",
+      "year": "March 2023 - May 2024",
+      "enabled": false,
+      "useBullets": false
+    },
+    {
+      "description": "Built a data pipeline + dashboard visuals; created user-focused summaries and repeatable reporting outputs to support analysis and decisions.",
+      "name": "Interactive U.S. COVID-19 Data Pipeline & Visualization",
+      "year": "2025",
+      "enabled": true,
+      "useBullets": false
+    },
+    {
+      "description": "Analyzed customer dataset and delivered recommendations in an executive-style report; focused on translating findings into operational actions.",
+      "name": "PrimeStop Convenience: Customer Conversion",
+      "year": "2025",
+      "enabled": true,
+      "useBullets": false
+    },
+    {
+      "name": "StatementProMax — Bank Statement Converter & Financial Analysis Platform",
+      "year": "2025",
+      "description": "Designed and developed StatementProMax, a full-featured web application for bank statement conversion and financial analysis using only client-side technologies. \nGitHub\n+1\n\nBuilt an intuitive PDF → Excel converter that securely converts financial statement PDFs into structured, analytics-ready Excel spreadsheets. \nGitHub\n\nImplemented a financial dashboard with interactive insights — including spending summaries, recurring payment detection, filters (monthly / quarterly / YTD), and financial KPIs. \nGitHub\n\nDeveloped smart categorization learning that auto-categorizes transactions based on user behavior and improves over time while protecting privacy (all data stored locally). \nGitHub\n\nCreated an Excel export feature with multi-sheet workbooks (Summary, Transactions, Chart Data, Instructions) ready for visualization and reporting. \nGitHub\n\nIntegrated with ConvertAPI for high-accuracy PDF to Excel conversion and ensured secure client-side processing with no data sent to external servers. \nGitHub\n\nLeveraged modern web tech stack: HTML5, CSS3, Vanilla JavaScript (ES6 modules), Chart.js, SheetJS (XLSX), IndexedDB & LocalStorage. \nGitHub\n\nEnhanced user experience with responsive UI/UX: tooltips, keyboard shortcuts (e.g., Ctrl+O, Ctrl+E), drag-and-drop file upload, progress indicators, and mobile support. \nGitHub\n\nOptimized for performance and security — 100% client-side processing with no user registration required. \nGitHub\n\nDeployed and maintained a public demo website hosted on GitHub Pages, increasing accessibility and project visibility. \nIskos\n\nDocumented features, tech stack, usage instructions, and contribution guidelines to support open-source collaboration.",
+      "enabled": false,
+      "useBullets": false
+    }
+  ],
+  "awards": [
+    {
+      "name": "Introduction to Python",
+      "enabled": false
+    },
+    {
+      "name": "Intermediate Python",
+      "enabled": false
+    },
+    {
+      "name": "Introduction to R",
+      "enabled": false
+    },
+    {
+      "name": "Introduction to Data Science in Python",
+      "enabled": false
+    },
+    {
+      "name": "Introduction to the Tidyverse",
+      "enabled": false
+    },
+    {
+      "name": "Google Analytics",
+      "enabled": true
+    }
+  ],
+  "showGpa": false,
+  "sectionOrder": [
+    "skills",
+    "experience",
+    "projects",
+    "education",
+    "awards"
+  ]
+}

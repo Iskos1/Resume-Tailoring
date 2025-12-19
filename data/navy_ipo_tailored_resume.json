@@ -1,0 +1,120 @@
+{
+  "name": "Jawad Iskandar",
+  "contact": {
+    "email": "Jawad.iskandar@outlook.com",
+    "phone": "(571) 269-8465",
+    "github": "Github.com/Iskos1",
+    "linkedin": "Linkedin.com/in/jawad-iskandar/"
+  },
+  "clearanceEligibility": "U.S. Citizen | Eligible for Top Secret/SCI Clearance | Available for Worldwide Service",
+  "professionalSummary": "Information systems professional with Bachelor's degree in Business Administration (Information Systems concentration) and hands-on experience in cloud infrastructure, network security, systems deployment, and team leadership. Proven track record of implementing secure network architectures, managing cross-functional technology teams, and optimizing information systems for operational excellence. Strong foundation in AWS/Azure cloud platforms, cybersecurity best practices, and systems integration with demonstrated ability to adapt to rapidly evolving technology environments.",
+  "skills": [
+    {
+      "category": "Information Systems & Network Operations",
+      "items": "Cloud Infrastructure (AWS VPC, Azure), Network Security, Systems Integration, Information Technology Operations, Command & Control Systems"
+    },
+    {
+      "category": "Cybersecurity & Network Defense",
+      "items": "Network Access Control Lists (NACLs), Security Groups, IAM, VPN Configuration (Site-to-Site, IKEv1), Encryption, Access Control, Threat Mitigation"
+    },
+    {
+      "category": "Technical Leadership & Training",
+      "items": "Team Leadership, Technical Training & Mentoring, Cross-functional Collaboration, Standard Operating Procedures, Performance Optimization"
+    },
+    {
+      "category": "Cloud & Systems Technologies",
+      "items": "AWS (EC2, VPC, S3, IAM), Azure (VMs, Storage, Blob), Python, SQL, System Administration, Data Analytics"
+    },
+    {
+      "category": "Professional Development",
+      "items": "Continuous Learning, Professional Certifications, Technical Excellence, Adaptability, Mission-Focused Execution"
+    }
+  ],
+  "experience": [
+    {
+      "title": "AI Training Specialist",
+      "company": "Handshake AI",
+      "location": "Remote",
+      "dates": "December 2025 - Present",
+      "bullets": [
+        "Contributed technical expertise to advance cutting-edge AI systems through rigorous evaluation, quality assessment, and domain-specific feedback on complex technical and analytical outputs",
+        "Evaluated AI-generated responses for accuracy, technical correctness, and operational relevance across information systems, cybersecurity, and technology domains to improve AI capabilities",
+        "Collaborated with distributed team of 100K+ technical experts and leading AI research labs, demonstrating ability to work effectively in geographically dispersed environments",
+        "Maintained high performance standards in remote, self-directed work environment while meeting project deadlines and quality benchmarks",
+        "Developed expertise in AI training methodologies, model evaluation frameworks, and technical assessment protocols through structured professional development"
+      ],
+      "techStack": "AI Systems, Technical Evaluation, Quality Assessment, Remote Collaboration, Distributed Operations"
+    },
+    {
+      "title": "Business Technology Specialist & Team Leader",
+      "company": "Apple",
+      "location": "Fairfax, VA",
+      "dates": "September 2021 - June 2024",
+      "bullets": [
+        "Led technology implementation initiatives for 50+ organizational clients, improving operational efficiency by 30% through strategic deployment of integrated systems, mobile device management (MDM), and cloud-based collaboration platforms",
+        "Served as technical team leader and subject matter expert, mentoring team members on enterprise technology solutions, information systems best practices, and secure deployment methodologies to elevate organizational performance",
+        "Improved operational forecasting accuracy by 25% through implementation of CRM systems and business intelligence tools, enabling data-driven decision-making and strategic resource allocation",
+        "Managed complex multi-stakeholder technology projects in fast-paced environment, coordinating cross-functional teams and adapting to changing operational priorities while maintaining mission focus and meeting tight deadlines",
+        "Established and maintained secure information systems for organizational clients by implementing Apple Business Manager, MDM solutions (Jamf), and integrated security protocols for enterprise device deployments",
+        "Conducted comprehensive needs assessments, technical briefings, and solution presentations for executive leadership and business owners, demonstrating strong communication skills across organizational levels",
+        "Consistently recognized as top performer by exceeding operational KPIs in client satisfaction, solution adoption rates, and mission accomplishment metrics",
+        "Maintained information security and data integrity through proper implementation of CRM systems (Salesforce) and adherence to organizational data management protocols",
+        "Demonstrated adaptability by quickly mastering new technologies, staying current with emerging platforms, and implementing innovative solutions to complex organizational challenges",
+        "Fostered culture of collaboration, inclusion, and mission excellence by adapting communication approaches for diverse audiences including technical specialists, executives, and operational teams"
+      ],
+      "techStack": "Enterprise Systems, MDM (Jamf), CRM (Salesforce), Cloud Solutions, Information Security, Team Leadership, Business Intelligence"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Business Administration",
+      "concentration": "Information Systems & Data Analytics Track",
+      "institution": "George Mason University",
+      "location": "Fairfax, VA",
+      "dates": "December 2025",
+      "gpa": "3.78/4.0",
+      "coursework": "Cloud Computing Essentials, Information Systems Audit and Control, Systems Analysis and Design, Data Mining for Business Applications, Programming for Analytics",
+      "relevance": "Accredited technical degree in Information Systems from regionally accredited institution, meeting Navy IPO qualification requirements"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Multi-Cloud Network Infrastructure & Security Implementation",
+      "dates": "2025",
+      "description": "Designed and deployed secure, enterprise-grade network architectures across AWS and Azure cloud platforms, demonstrating practical expertise in network warfare concepts, defense-in-depth security, and operational systems management. Architected 3+ AWS Virtual Private Cloud (VPC) environments with advanced CIDR planning, custom subnets, routing tables, Internet Gateways, and 2 Site-to-Site VPN tunnels using Customer Gateways (CGW), Virtual Private Gateways (VGW), and IKEv1 encryption protocols for secure communications. Strengthened network defense posture by implementing 20+ Network Access Control Lists (NACLs) and configuring 6+ Security Groups with IP-restricted SSH/RDP access controls, reducing unauthorized access risk by 40-50%. Deployed and validated 6+ EC2 virtual machine instances across multiple VPCs with proper network isolation, demonstrating understanding of segmented network operations and secure system deployment. Managed cloud-based information storage systems with 4+ S3 buckets, implementing versioning controls and JSON-based access policies to achieve 100% data recovery capability and reduce misconfiguration risks by 90%. Executed 10+ security validation scenarios testing access controls, public/private network configurations, and least-privilege principles to ensure operational security compliance. Provisioned Azure infrastructure including 2 Storage Accounts with redundancy configurations and 3+ Blob Containers with role-based access controls, demonstrating multi-cloud interoperability. Applied defense-in-depth cybersecurity principles including encryption, access control, network segmentation, and monitoring across multi-cloud environments to protect information systems from adversary threats."
+    },
+    {
+      "name": "COVID-19 Information Systems Data Pipeline & Geospatial Intelligence Platform",
+      "dates": "2025",
+      "description": "Engineered automated information processing pipeline handling 3,000+ U.S. counties of real-time epidemiological data, demonstrating capability to develop mission-critical information systems for large-scale operations. Automated data ingestion from multiple distributed sources, reducing manual processing time from hours to under 5 seconds and improving information availability for operational decision-making by 90%. Transformed complex datasets into actionable intelligence through advanced time-series analysis, statistical computation, and geospatial visualization, enhancing situational awareness and trend analysis capabilities by 40%. Developed interactive user interface with real-time query capabilities that reduced analysis effort by 75%, enabling rapid generation of state-level intelligence summaries for operational stakeholders. Designed comprehensive 4-panel visualization dashboard providing clear, interpretable intelligence on pandemic trends for executive-level decision-makers, improving information clarity by 3x. Built interactive geospatial mapping platform covering 3,000+ counties with color-coded threat levels and detailed tooltips, increasing geographic situational awareness by 60%. Implemented robust data quality controls, validation procedures, and automated monitoring to ensure information accuracy and reliability for mission-critical applications. Delivered complete, documented, and reproducible system with zero runtime errors, demonstrating professional excellence in information systems development."
+    },
+    {
+      "name": "Strategic Technology Systems Consulting & Innovation Project",
+      "dates": "2025",
+      "description": "Led comprehensive strategic analysis of $49B technology sector opportunity, conducting external environmental analysis using PESTEL framework and Porter's Five Forces to assess strategic landscape, competitive dynamics, and market opportunities. Performed internal capability assessment using VRIO framework to evaluate organizational strengths in AI, IoT, robotics, predictive analytics, and information systems, identifying strategic advantages and innovation opportunities. Designed integrated technology system concept combining AI-enhanced hardware, IoT sensor networks, and cloud-based analytics platform for real-time monitoring, automation, and command & control operations. Built economic and operational models projecting $300-350M revenue potential, 10% efficiency improvements, and $20M cost savings through technology innovation and systems optimization. Developed three-phase execution roadmap spanning 2025-2030 with pilot validation, commercial scale-up, and global integration phases, including specific targets for technology deployment, digital adoption, and operational efficiency. Constructed Key Performance Indicators (KPIs) and success metrics across revenue, operational efficiency, technology adoption, and sustainability objectives to measure strategic performance. Assessed operational risks including cybersecurity threats, regulatory requirements, and talent gaps, proposing mitigation strategies through partnerships, compliance planning, and workforce development. Produced executive-level strategic deliverable synthesizing complex technical analysis, capability assessments, and operational recommendations for senior leadership decision-making."
+    },
+    {
+      "name": "Predictive Analytics & Machine Learning Information Systems",
+      "dates": "2025",
+      "description": "Analyzed complex dataset of 5,000+ records with 35+ variables using advanced statistical modeling and machine learning techniques to uncover behavioral patterns and predict future trends. Built comprehensive data preprocessing pipeline incorporating statistical transformations, encoding techniques, normalization, and quality control procedures, improving model reliability by 30%. Developed and evaluated three classification models (Logistic Regression, Linear Discriminant Analysis, Random Forest) to identify optimal predictive approach, increasing accuracy from 71% to 86% AUC through systematic model comparison. Enhanced model performance by 14% through 5-fold cross-validation and grid search hyperparameter optimization, identifying key predictive factors for operational decision-making. Constructed regression model to forecast operational metrics with 18% improvement in R², enabling more accurate planning and resource allocation strategies. Delivered four data-driven recommendations to improve operational outcomes by 10-15%, summarizing technical findings in executive-style analytical report for leadership review."
+    }
+  ],
+  "certifications": [
+    "Google Analytics Certification",
+    "Data Science in Python - Professional Certificate", 
+    "Advanced Python Programming - Professional Certificate",
+    "R Programming & Tidyverse - Professional Certificate",
+    "AWS Cloud Computing Essentials"
+  ],
+  "additionalQualifications": {
+    "clearance": "U.S. Citizen | Eligible for Top Secret/Sensitive Compartmented Information (SCI) clearance",
+    "availability": "Available for worldwide service including sea duty, shore tours, and joint staff assignments",
+    "technicalProficiency": "Proficient in cloud infrastructure (AWS/Azure), network security, systems administration, programming (Python, SQL), and data analytics",
+    "leadership": "Demonstrated leadership through team mentoring, cross-functional coordination, and performance optimization in high-pressure environments",
+    "professionalDevelopment": "Committed to continuous learning through professional certifications, technical training, and milestone qualifications",
+    "communication": "Strong verbal and written communication skills with ability to brief technical information to executive leadership and operational teams",
+    "adaptability": "Proven ability to rapidly master new technologies, adapt to changing operational requirements, and perform under pressure",
+    "workEthic": "Mission-focused mindset with record of exceeding performance standards and maintaining operational excellence"
+  }
+}
+

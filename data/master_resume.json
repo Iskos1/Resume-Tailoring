@@ -1,0 +1,123 @@
+{
+  "name": "Jawad Iskandar",
+  "contact": {
+    "email": "Jawad.iskandar@outlook.com",
+    "phone": "(571) 269 - 8465",
+    "github": "Github.com/Iskos1",
+    "linkedin": "Linkedin.com/in/jawad-iskandar/"
+  },
+  "sectionNames": {
+    "tailor": "AI Resume Tailor",
+    "personal": "Personal Information",
+    "skills": "Skills",
+    "experience": "Work Experience",
+    "education": "Education",
+    "projects": "Projects",
+    "awards": "Awards & Certificates"
+  },
+  "skills": [
+    {
+      "category": "Programming & Data Analysis",
+      "items": "Python, R, SQL, JavaScript, Pandas, NumPy, GeoPandas, Data Mining, ETL Processes"
+    },
+    {
+      "category": "Data Visualization & Business Intelligence",
+      "items": "Tableau, Power BI, Matplotlib, Folium, Chart.js, Excel, Google Analytics"
+    },
+    {
+      "category": "Cloud & Development Tools",
+      "items": "AWS (EC2, VPC, S3), Azure (Blob Storage, VMs), Git/GitHub, Jupyter, Shopify (Liquid), HTML/CSS"
+    },
+    {
+      "category": "Machine Learning & AI",
+      "items": "scikit-learn, Machine Learning Pipelines, NLP Fundamentals, Large Language Models (LLMs), Prompt Engineering"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Handshake AI",
+      "location": "Remote",
+      "title": "AI Training Specialist",
+      "dates": "December 2025 - Present",
+      "bullets": [
+        "Contributing domain expertise to train and refine cutting-edge AI models through data annotation, evaluation, and feedback on model outputs across diverse subject areas.",
+        "Evaluating AI-generated responses for accuracy, relevance, and quality to improve how AI systems understand and process complex domain-specific concepts.",
+        "Collaborating with leading AI labs and a community of 100K+ experts to challenge AI models and provide expert-level critique that shapes AI development.",
+        "Participating in remote, flexible project-based work (up to 20 hours/week) while gaining hands-on experience with AI model training workflows and methodologies.",
+        "Building practical AI skills through structured tasks and professional feedback from PhD-level reviewers, contributing to the advancement of AI capabilities."
+      ],
+      "techStack": "AI Model Evaluation, Data Annotation, Quality Assessment, AI Training Workflows"
+    },
+    {
+      "bullets": [
+        "Drove business growth for 50+ small and mid-sized clients, increasing ROI by 18% by designing custom Apple-based technology solutions that simplified daily operations and reduced friction in employee workflows.",
+        "Streamlined team operations for business customers, improving workflow efficiency by 30% by migrating organizations to integrated Apple device ecosystems and cloud solutions (iCloud, Apple Business Manager, third-party SaaS).",
+        "Expanded B2B revenue by 15% through targeted client workshops, needs analyses, and solution-driven recommendations that showcased Apple hardware, software, and third-party integrations.",
+        "Boosted quarterly forecasting accuracy by 25% by using CRM and Apple's internal business intelligence tools to track performance trends, identify high-probability clients, and refine sales pipeline strategies.",
+        "Established long-term client relationships by conducting business sessions, on-site consultations, and product briefings, tailoring Apple solutions to industry-specific challenges such as device deployment, security, mobile workflows, and employee productivity.",
+        "Acted as the store's go-to expert for B2B needs, mentoring team members on business customer engagement, solution selling, and Apple ecosystem capabilities to elevate overall store performance.",
+        "Delivered high-impact recommendations by leveraging deep knowledge of Apple products (Mac, iPad, iPhone), Apple Business Manager, MDM systems (e.g., Jamf), and workflow optimization tools to implement scalable business solutions.",
+        "Strengthened customer satisfaction and retention by maintaining precise relationship data in CRM systems (Salesforce, Apple CRM), enabling Apple to build accurate business intelligence for future targeting.",
+        "Collaborated with cross-functional Apple teams to design strategic business events, workshops, and training sessions that increased awareness of Apple's business offerings and helped local companies modernize their operations.",
+        "Demonstrated Apple's values of inclusion, collaboration, and customer-centered communication, creating a welcoming environment and adapting communication styles for executives, small business owners, and technical teams.",
+        "Consistently ranked as a top performer by meeting and exceeding B2B KPIs in customer satisfaction scores, solution adoption, and repeat engagement metrics.",
+        "Apple Business Manager, Jamf, CRM Systems, Salesforce, Apple CRM"
+      ],
+      "company": "Apple",
+      "dates": "Sep 2021 - Jun 2024",
+      "location": "Fairoaks, VA",
+      "techStack": "",
+      "title": "Business Specialist"
+    }
+  ],
+  "education": [
+    {
+      "coursework": "Cloud Computing Essentials, Data Mining for Business Applications, Information Systems Audit and Control, Systems Analysis and Design, Programming for Analytics",
+      "dates": "December 2025",
+      "degree": "B.S Business Administration",
+      "gpa": "GPA: 3.78/4.0",
+      "institution": "George Mason Univeristy"
+    }
+  ],
+  "projects": [
+    {
+      "description": "Improved multi-cloud security, reliability, and storage efficiency by 35–100% across AWS and Azure environments through end-to-end hands-on configuration.\n\n\n\nDesigned and deployed 3+ AWS VPC architectures with CIDR planning, custom subnets, route tables, Internet Gateways, and 2 Site-to-Site VPN tunnels using CGWs, VGWs, and IKEv1 configurations.\n\n\n\nStrengthened network protection by implementing 20+ Network ACL rules and creating 6+ Security Groups with IP-restricted SSH/RDP access, reducing unauthorized access risk by 40–50%.\n\n\n\nLaunched and validated 6+ EC2 instances across 3 custom VPCs, improving routing accuracy and understanding of public vs. private IP behavior by 30%.\n\n\n\nManaged 4+ S3 buckets, enabling versioning and restoring 100% of deleted files via delete markers; authored 5+ JSON bucket policies, reducing misconfiguration risks by 90%.\n\n\n\nExecuted 10+ access-control test scenarios using Block Public Access settings, ACLs, and object-level permissions to validate least-privilege security.\n\n\n\nProvisioned 2 Azure Storage Accounts with LRS redundancy, increasing data durability through 3x replication within the region.\n\n\n\nConfigured 3+ Azure Blob Containers with Private, Blob, and Container permissions, improving structured data access by 100%.\n\n\n\nCreated, edited, and restored multiple Azure Blob Snapshots, achieving zero-data-loss recovery and demonstrating end-to-end versioning.\n\n\n\nApplied cross-platform cloud principles—versioning, redundancy, lifecycle management, and RBAC—to improve multi-cloud operational consistency by ~35%.\n\n\nAWS EC2 Virtual Machine Deployment Project\n\nDeployed a Windows Server virtual machine in AWS EC2, selecting an appropriate AMI and instance type based on compute sizing requirements (CPU, memory, and cost).\n\nCreated and managed an RSA key pair (.pem) for secure instance access, demonstrating understanding of cloud authentication and key-based security.\n\nLaunched and validated the VM using default networking configurations, reviewing VPC, subnet, availability zone, and security group associations.\n\nRetrieved and analyzed private and public IP addresses to understand cloud networking behavior and remote access requirements.\n\nEstablished RDP (Remote Desktop Protocol) connectivity to the Windows Server instance, including password decryption using the private key.\n\nVerified instance runtime status and system accessibility through the AWS EC2 console and remote desktop session.\n\nProperly terminated the EC2 instance after use to prevent unnecessary resource consumption and avoid ongoing costs.\n\n\n\nAzure Virtual Machine Deployment Project\n\nDeployed a Windows Server virtual machine in Microsoft Azure, following standard cloud VM provisioning workflows.\n\nCreated and managed an Azure Resource Group to logically organize compute, networking, and storage resources with a shared lifecycle.\n\nSelected a Windows Server image from the Azure Marketplace and configured an appropriate B1s VM size based on compute and cost considerations.\n\nConfigured local administrator credentials and enabled RDP (Remote Desktop Protocol) for secure remote access.\n\nReviewed and validated VM configuration settings prior to deployment using Azure’s built-in validation process.\n\nIdentified and verified the VM’s public IP address for remote connectivity and management.\n\nSuccessfully connected to the VM via RDP, confirming system availability and OS accessibility.\n\nPerformed proper resource cleanup by deleting the resource group, ensuring all associated resources were removed to prevent ongoing costs.\n\n\nSkills & Tools: AWS VPC, Route Tables, VPN (CGW/VGW), EC2, NACLs, Security Groups, S3, Bucket Policies (JSON), S3 Versioning & Delete Markers, Azure Storage Accounts, Azure Blob Storage, Snapshots, IAM concepts, Public/Private networking.",
+      "name": "Cloud Computing Projects (AWS & Azure)",
+      "year": "2025"
+    },
+    {
+      "description": "Led a semester-long strategy consulting engagement proposing a new corporate-level diversification strategy for John Deere by entering the $49B projected vertical farming industry, aligning with smart urban agriculture trends and Deere’s long-term growth goals.\n\n\n\nConducted comprehensive external market analysis using PESTEL and Porter’s Five Forces, identifying key industry drivers such as a 50% rise in global food demand by 2050, declining farmland, rapid smart-city development, and smart-farming market growth projected to reach $30B by 2030.\n\n\n\nPerformed internal capability assessment using the VRIO framework, mapping Deere’s strengths in AI, IoT, robotics, predictive analytics, high-quality machinery, and proprietary software, validating a strong strategic fit for expansion into controlled-environment agriculture.\n\n\n\nDesigned the strategic concept “Deere Urban AgTech”, a new division focused on indoor and vertical farming through AI-enhanced hydroponic/aeroponic modular systems, Deere-branded sensor networks, and a cloud analytics platform (FarmOS Pro) for real-time monitoring and automation.\n\n\n\nBuilt the economic logic model, projecting $300–$350M in revenue by Year 3, 10% margin improvement, and $20M in predictive maintenance savings, supported by recurring subscription-based digital services.\n\n\n\nIdentified and modeled cross-divisional synergies by leveraging Deere Financial Services for bundled equipment + software subscriptions, Maintenance & Parts for servicing modular systems, and existing R&D teams to reuse precision-farming innovations.\n\n\n\nDeveloped a three-phase execution roadmap (2025–2030):\n\n\n\n\n\nPhase 1 – Pilot (2025–2026): Partner with universities and city sustainability programs to validate energy efficiency, yield performance, and AI-driven environmental controls.\n\n\n\nPhase 2 – Commercial Scale-Up (2026–2028): Expand manufacturing capacity, launch modular AgTech products, and achieve projected targets of $250M modular sales and 10% digital revenue uplift.\n\n\n\nPhase 3 – Global Integration (2028–2030): Connect indoor systems to renewable microgrids and carbon tracking APIs to drive 15% ROI uplift and 20% CO₂ reduction.\n\n\n\nApplied strategic frameworks from the course (corporate diversification, differentiation strategy, economies of scope, platform effects, and learning curves) to justify the feasibility and competitive advantage of Deere’s expansion.\n\n\n\nConstructed KPIs and success metrics across revenue, margin, digital adoption, CO₂ reduction, operational efficiency, and customer retention to evaluate strategic performance.\n\n\n\nAssessed major risks—including cybersecurity vulnerabilities, zoning and regulatory barriers, and talent shortages—and proposed mitigation strategies through cybersecurity partnerships, compliance planning, and workforce reskilling.\n\n\n\nProduced a consulting-style deliverable summarizing market attractiveness, internal capability alignment, value creation logic, execution sequencing, and financial justification, supporting Deere’s long-term transition into sustainable smart-farming ecosystems.\n\n\n\nTableau, SAP ERP, Power BI, VRIO Framework",
+      "name": "Strategy Development Consulting Report - Capstone",
+      "year": "2025"
+    },
+    {
+      "description": "Built an e-commerce business end-to-end, including product research, supplier verification, licensing, site development, SEO, and scaling operations.\n\n\n\nDiscovered 20+ high-value product keywords and identified profitable niches using Ahrefs, Semrush, and Google Trends, increasing organic visibility and search ranking potential.\n\n\n\nDesigned and launched a custom Shopify store using Liquid, HTML, CSS, JavaScript, and Figma wireframes, improving site load speed, structure, and conversion-focused design.\n\n\n\nCreated keyword-rich landing pages and collection pages, increasing organic click-through rates by 40% and boosting user retention by 25% through clean UI and simplified navigation.\n\n\n\nScaled organic traffic from 500 to 90K+ monthly visitors and revenue from $0 to $1,000 per day within 6 months by executing a data-driven SEO and content strategy.\n\n\n\nImproved UI/UX by redesigning layouts, enhancing mobile responsiveness, and optimizing user flows, resulting in higher engagement and lower bounce rates.\n\n\n\nBuilt internal linking structures, fixed indexing issues, and monitored performance through Google Search Console, improving keyword ranking stability and rich-snippet eligibility.\n\n\n\nCreated product descriptions, comparison charts, and SEO-optimized blog posts to capture high-intent customers and increase top-funnel traffic.\n\n\n\nUsed analytics tools (Ahrefs, Semrush, Search Console) to track KPIs, refine keywords, and continuously adjust strategy based on competition and algorithm shifts.\n\n\n\nManaged end-to-end business operations including supplier onboarding, quality verification, profit margin analysis, and inventory planning.\n\n\n\nAhrefs, Semrush, Google Trends, Shopify, Liquid, HTML, CSS, JavaScript, Google Search Console, Figma",
+      "name": "Dispomode.com",
+      "year": "March 2023 - May 2024"
+    },
+    {
+      "description": "Built a full Python data pipeline that processed 3,000+ U.S. counties worth of COVID-19 data using Pandas, GeoPandas, Folium, and Matplotlib, increasing data accessibility for users by 90% through automated cleaning and visualization.\n\n\n\nAutomated ingestion of 100% live datasets from GitHub (cases, deaths, county geometries), cutting manual data-refresh time from hours to under 5 seconds.\n\n\n\nTransformed wide-format CDC datasets into long-format time-series data using pandas.melt, improving trend-analysis accuracy by 40% and enabling seamless county-level merging.\n\n\n\nDeveloped an interactive user input system that generated real-time state-level summaries (Day-0 detection, total cases/deaths, and daily averages), reducing user analysis effort by 75%.\n\n\n\nImplemented advanced time-series computations (daily deltas, cumulative curves, YOY segmentation), enhancing statistical clarity and insight depth by 50%.\n\n\n\nDesigned a 4-panel visualization dashboard (daily cases, cumulative cases, daily deaths, cumulative deaths), boosting interpretability of pandemic trends by 3× through consistent formatting and time-aware scaling.\n\n\n\nBuilt an interactive Folium choropleth map covering 3K+ counties, with tooltips and color-coding, increasing geographic insight and user engagement by 60%.\n\n\n\nDelivered a polished, reproducible Jupyter notebook with zero runtime errors, improving reliability and reusability for future analysis by 100%.\n\nSkills & Tools: Python, Pandas, GeoPandas, Folium, Matplotlib, FSSPEC, Mapclassify, Contextily, Time-Series Analysis, Data Wrangling, Choropleth Mapping, User-Interactive Data Apps.",
+      "name": "Interactive U.S. COVID-19 Data Pipeline & Visualization",
+      "year": "2025"
+    },
+    {
+      "description": "Analyzed a dataset of 5,000+ customers with 35+ variables to uncover conversion drivers, increasing segmentation accuracy by 22% through structured EDA and statistical modeling.\n\n\n\nImproved model reliability by 30% by building a full ML preprocessing pipeline (Yeo-Johnson, one-hot encoding, normalization, leakage removal).\n\n\n\nIncreased predictive performance from 71% to 86% AUC by developing and comparing three classification models (Logistic Regression, LDA, Random Forest).\n\n\n\nEnhanced Random Forest model accuracy by 14% using 5-fold cross-validation and grid search, identifying loyalty enrollment and promotions as top predictors.\n\n\n\nBuilt a regression model to predict convenience visits with 18% improvement in R², enabling clearer business forecasting and customer targeting strategies.\n\n\n\nDelivered four data-driven recommendations projected to improve customer conversion by 10–15%, summarizing results in a consultant-style executive report.\n\nTools & Technologies: R, Tidyverse, Tidymodels, Recipes, Discrim, Ranger (Random Forest), Janitor, ggplot2, Data Mining, Feature Engineering, ML Model Evaluation, Predictive Analytics.",
+      "name": "PrimeStop Convenience: Customer Conversion",
+      "year": "2025"
+    },
+    {
+      "name": "StatementProMax — Bank Statement Converter & Financial Analysis Platform",
+      "year": "2025",
+      "description": "Designed and developed StatementProMax, a full-featured web application for bank statement conversion and financial analysis using only client-side technologies. \nGitHub\n+1\n\nBuilt an intuitive PDF → Excel converter that securely converts financial statement PDFs into structured, analytics-ready Excel spreadsheets. \nGitHub\n\nImplemented a financial dashboard with interactive insights — including spending summaries, recurring payment detection, filters (monthly / quarterly / YTD), and financial KPIs. \nGitHub\n\nDeveloped smart categorization learning that auto-categorizes transactions based on user behavior and improves over time while protecting privacy (all data stored locally). \nGitHub\n\nCreated an Excel export feature with multi-sheet workbooks (Summary, Transactions, Chart Data, Instructions) ready for visualization and reporting. \nGitHub\n\nIntegrated with ConvertAPI for high-accuracy PDF to Excel conversion and ensured secure client-side processing with no data sent to external servers. \nGitHub\n\nLeveraged modern web tech stack: HTML5, CSS3, Vanilla JavaScript (ES6 modules), Chart.js, SheetJS (XLSX), IndexedDB & LocalStorage. \nGitHub\n\nEnhanced user experience with responsive UI/UX: tooltips, keyboard shortcuts (e.g., Ctrl+O, Ctrl+E), drag-and-drop file upload, progress indicators, and mobile support. \nGitHub\n\nOptimized for performance and security — 100% client-side processing with no user registration required. \nGitHub\n\nDeployed and maintained a public demo website hosted on GitHub Pages, increasing accessibility and project visibility. \nIskos\n\nDocumented features, tech stack, usage instructions, and contribution guidelines to support open-source collaboration."
+    }
+  ],
+  "awards": [
+    "Introduction to Python",
+    "Intermediate Python",
+    "Introduction to R",
+    "Introduction to Data Science in Python",
+    "Introduction to the Tidyverse",
+    "Google Analytics"
+  ],
+  "showGpa": false
+}

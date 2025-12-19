@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --bg: #0d1117;
+            --bg-card: #161b22;
+            --bg-input: #0d1117;
+            --border: #30363d;
+            --border-focus: #58a6ff;
+            --text: #e6edf3;
+            --text-dim: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #3fb950;
+            --danger: #f85149;
+            --font: 'IBM Plex Sans', -apple-system, sans-serif;
+            --mono: 'IBM Plex Mono', monospace;
+        }
+        
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 16px;
+        }
+        
+        /* Sections */
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .section-header:hover {
+            background: rgba(88, 166, 255, 0.05);
+        }
+        
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+        
+        .edit-section-name {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .section-header:hover .edit-section-name {
+            opacity: 0.6;
+        }
+        
+        .edit-section-name:hover {
+            opacity: 1 !important;
+            color: var(--accent);
+        }
+        
+        .section-name-input {
+            padding: 6px 10px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-focus);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .section-content {
+            padding: 20px;
+        }
+        
+        .section.collapsed .section-content {
+            display: none;
+        }
+        
+        .section.collapsed .section-header {
+            border-bottom: none;
+        }
+        
+        .chevron {
+            transition: transform 0.2s;
+        }
+        
+        .section.collapsed .chevron {
+            transform: rotate(-90deg);
+        }
+        
+        /* Drag and Drop */
+        .section {
+            transition: opacity 0.2s, border 0.2s;
+        }
+        
+        .section.dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--accent);
+        }
+        
+        .section.drag-over {
+            border-top: 3px solid var(--accent-green);
+        }
+        
+        .drag-handle {
+            cursor: move;
+            opacity: 0.5;
+            margin-right: 8px;
+            user-select: none;
+            padding: 4px;
+        }
+        
+        .drag-handle:hover {
+            opacity: 1;
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        /* Allow text selection in section content */
+        .section-content * {
+            cursor: text;
+            user-select: text;
+        }
+        
+        .section-content input,
+        .section-content textarea,
+        .section-content button {
+            cursor: auto;
+        }
+        
+        /* Form elements */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        
+        input, textarea {
+            padding: 10px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--border-focus);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: var(--mono);
+            font-size: 13px;
+        }
+        
+        /* Dynamic items */
+        .item-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            position: relative;
+            transition: opacity 0.3s, border-color 0.3s;
+        }
+        
+        .item-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .item-card.disabled {
+            opacity: 0.5;
+            border-color: var(--danger);
+            border-style: dashed;
+        }
+        
+        .item-card.disabled::before {
+            content: '🚫 Hidden from PDF';
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            font-size: 11px;
+            color: var(--danger);
+            font-weight: 600;
+            background: var(--bg-card);
+            padding: 2px 8px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+        
+        .remove-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 18px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        
+        .remove-btn:hover {
+            opacity: 1;
+        }
+        
+        .reorder-controls {
+            position: absolute;
+            top: 12px;
+            right: 48px;
+            display: flex;
+            gap: 4px;
+        }
+        
+        .reorder-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+            border-radius: 4px;
+            opacity: 0.6;
+            transition: all 0.2s;
+        }
+        
+        .reorder-btn:hover {
+            opacity: 1;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .reorder-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: var(--border);
+            color: var(--text-dim);
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            position: absolute;
+            top: 12px;
+            right: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+        
+        .toggle-label {
+            font-size: 11px;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            cursor: pointer;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border);
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider:before {
+            content: "";
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--accent-green);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        .gpa-field-hidden {
+            display: none !important;
+        }
+        
+        .add-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            background: transparent;
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            color: var(--text-dim);
+            font-family: var(--font);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .add-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Bullets */
+        .bullets-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .bullet-row {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .bullet-row input {
+            flex: 1;
+        }
+        
+        .bullet-remove {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            padding: 0 8px;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+        
+        .bullet-remove:hover {
+            opacity: 1;
+        }
+        
+        .add-bullet-btn {
+            background: transparent;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            padding: 8px;
+            color: var(--text-dim);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .add-bullet-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: var(--accent-green);
+            color: #fff;
+        }
+        
+        .btn-secondary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .btn-warning {
+            background: #f0883e;
+            color: #fff;
+        }
+        
+        .btn-warning:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-green);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Tailored Resume</h1>
+            <p class="subtitle">Your AI-optimized resume • <a href="/" style="color: var(--accent);">Back to Master Resume</a></p>
+        </header>
+        
+        
+        <!-- Personal Info -->
+        <div class="section" id="section-personal">
+            <div class="section-header" onclick="toggleSection('section-personal')">
+                <div class="section-title-group">
+                    <h2><span>👤</span> <span id="section-name-personal">Personal Information</span></h2>
+                    <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('personal')" title="Edit section name">✏️</button>
+                </div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="form-row single">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="name" placeholder="Your Full Name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="phone" placeholder="XXX-XXX-XXXX">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>GitHub</label>
+                        <input type="text" id="github" placeholder="github.com/username">
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn</label>
+                        <input type="text" id="linkedin" placeholder="linkedin.com/in/username">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Skills -->
+        <div class="section" id="section-skills"
+             ondragover="handleDragOver(event, 'skills')"
+             ondragleave="handleDragLeave(event, 'skills')"
+             ondrop="handleDrop(event, 'skills')">
+            <div class="section-header" onclick="toggleSection('section-skills')">
+                <div class="section-title-group">
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'skills')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🛠️</span> <span id="section-name-skills">Skills</span></h2>
+                    <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('skills')" title="Edit section name">✏️</button>
+                </div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-content">
+                <div id="skills-container"></div>
+                <button class="add-btn" onclick="addSkill()">+ Add Skill Category</button>
+            </div>
+        </div>
+        
+        <!-- Experience -->
+        <div class="section" id="section-experience"
+             ondragover="handleDragOver(event, 'experience')"
+             ondragleave="handleDragLeave(event, 'experience')"
+             ondrop="handleDrop(event, 'experience')">
+            <div class="section-header" onclick="toggleSection('section-experience')">
+                <div class="section-title-group">
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'experience')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>💼</span> <span id="section-name-experience">Work Experience</span></h2>
+                    <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('experience')" title="Edit section name">✏️</button>
+                </div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-content">
+                <div id="experience-container"></div>
+                <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+            </div>
+        </div>
+        
+        <!-- Education -->
+        <div class="section" id="section-education"
+             ondragover="handleDragOver(event, 'education')"
+             ondragleave="handleDragLeave(event, 'education')"
+             ondrop="handleDrop(event, 'education')">
+            <div class="section-header" onclick="toggleSection('section-education')">
+                <div class="section-title-group">
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'education')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🎓</span> <span id="section-name-education">Education</span></h2>
+                    <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('education')" title="Edit section name">✏️</button>
+                </div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-content">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;">
+                    <label style="flex: 1; font-size: 14px; color: var(--text); font-weight: 500;">Show GPA on Resume</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="show-gpa-toggle" checked onchange="toggleGpaVisibility(this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div id="education-container"></div>
+                <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+            </div>
+        </div>
+        
+        <!-- Projects -->
+        <div class="section" id="section-projects"
+             ondragover="handleDragOver(event, 'projects')"
+             ondragleave="handleDragLeave(event, 'projects')"
+             ondrop="handleDrop(event, 'projects')">
+            <div class="section-header" onclick="toggleSection('section-projects')">
+                <div class="section-title-group">
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'projects')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🚀</span> <span id="section-name-projects">Projects</span></h2>
+                    <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('projects')" title="Edit section name">✏️</button>
+                </div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-content">
+                <div id="projects-container"></div>
+                <button class="add-btn" onclick="addProject()">+ Add Project</button>
+            </div>
+        </div>
+        
+        <!-- Awards -->
+        <div class="section" id="section-awards"
+             ondragover="handleDragOver(event, 'awards')"
+             ondragleave="handleDragLeave(event, 'awards')"
+             ondrop="handleDrop(event, 'awards')">
+            <div class="section-header" onclick="toggleSection('section-awards')">
+                <div class="section-title-group">
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'awards')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🏆</span> <span id="section-name-awards">Awards & Certificates</span></h2>
+                    <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('awards')" title="Edit section name">✏️</button>
+                </div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-content">
+                <div id="awards-container"></div>
+                <button class="add-btn" onclick="addAward()">+ Add Award</button>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="btn btn-primary" onclick="saveResume()">💾 Save Tailored Resume</button>
+            <button class="btn btn-secondary" onclick="downloadPDF()">📥 Download PDF</button>
+            <button class="btn btn-warning" onclick="importFromMaster()">🔄 Import from Master Resume</button>
+        </div>
+        
+    </div>
+    
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        // Helper function to escape HTML entities
+        function escapeHtml(text) {
+            if (text == null) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        let resumeData = {
+            name: '',
+            contact: { email: '', phone: '', github: '', linkedin: '' },
+            skills: [],
+            experience: [],
+            education: [],
+            projects: [],
+            awards: [],
+            sectionOrder: ['skills', 'experience', 'education', 'projects', 'awards'],
+            showGpa: true,
+            sectionNames: {
+                personal: 'Personal Information',
+                skills: 'Skills',
+                experience: 'Work Experience',
+                education: 'Education',
+                projects: 'Projects',
+                awards: 'Awards & Certificates'
+            }
+        };
+        
+        // Toggle section collapse
+        function toggleSection(id) {
+            document.getElementById(id).classList.toggle('collapsed');
+        }
+        
+        // Drag and Drop functionality
+        let draggedSection = null;
+        
+        function handleDragStart(e, sectionId) {
+            // Stop event propagation to prevent triggering section toggle
+            e.stopPropagation();
+            
+            draggedSection = sectionId;
+            e.target.closest('.section').classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', sectionId);
+        }
+        
+        function handleDragOver(e, sectionId) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            
+            const section = document.getElementById('section-' + sectionId);
+            section.classList.add('drag-over');
+            
+            // Auto-scroll when near edges
+            const scrollThreshold = 100;
+            const viewportHeight = window.innerHeight;
+            const mouseY = e.clientY;
+            
+            if (mouseY < scrollThreshold) {
+                startAutoScroll('up');
+            } else if (mouseY > viewportHeight - scrollThreshold) {
+                startAutoScroll('down');
+            } else {
+                stopAutoScroll();
+            }
+            
+            return false;
+        }
+        
+        function handleDragLeave(e, sectionId) {
+            const section = document.getElementById('section-' + sectionId);
+            section.classList.remove('drag-over');
+            stopAutoScroll();
+        }
+        
+        function handleDrop(e, targetSectionId) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            e.preventDefault();
+            stopAutoScroll();
+            
+            console.log('Dropped', draggedSection, 'onto', targetSectionId);
+            
+            if (draggedSection && draggedSection !== targetSectionId) {
+                // Update section order
+                const currentOrder = [...resumeData.sectionOrder];
+                const draggedIndex = currentOrder.indexOf(draggedSection);
+                const targetIndex = currentOrder.indexOf(targetSectionId);
+                
+                console.log('Current order:', currentOrder);
+                console.log('Dragged index:', draggedIndex, 'Target index:', targetIndex);
+                
+                if (draggedIndex !== -1 && targetIndex !== -1) {
+                    // Remove dragged section from its current position
+                    currentOrder.splice(draggedIndex, 1);
+                    // Insert it at the target position
+                    currentOrder.splice(targetIndex, 0, draggedSection);
+                    
+                    resumeData.sectionOrder = currentOrder;
+                    console.log('New order:', currentOrder);
+                    
+                    // Reorder DOM elements
+                    reorderSections();
+                }
+            }
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('drag-over');
+                section.classList.remove('dragging');
+            });
+            
+            draggedSection = null;
+            
+            return false;
+        }
+        
+        function handleDragEnd(e) {
+            stopAutoScroll();
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('drag-over');
+                section.classList.remove('dragging');
+            });
+        }
+        
+        function reorderSections() {
+            const container = document.querySelector('.container');
+            const sections = {};
+            
+            // Store references to all sections
+            resumeData.sectionOrder.forEach(id => {
+                sections[id] = document.getElementById('section-' + id);
+            });
+            
+            // Get the actions div (save/download buttons)
+            const actionsDiv = document.querySelector('.actions');
+            
+            // Remove all sections from DOM
+            Object.values(sections).forEach(section => {
+                if (section && section.parentNode) {
+                    section.parentNode.removeChild(section);
+                }
+            });
+            
+            // Re-add sections in new order
+            resumeData.sectionOrder.forEach(id => {
+                const section = sections[id];
+                if (section) {
+                    container.insertBefore(section, actionsDiv);
+                }
+            });
+            
+            // Save the new order
+            saveResume();
+            
+            showToast('✓ Section order updated!');
+        }
+        
+        // Auto-scroll when dragging near edges
+        let autoScrollInterval = null;
+        
+        function startAutoScroll(direction) {
+            stopAutoScroll();
+            autoScrollInterval = setInterval(() => {
+                const scrollAmount = direction === 'up' ? -10 : 10;
+                window.scrollBy(0, scrollAmount);
+            }, 50);
+        }
+        
+        function stopAutoScroll() {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = null;
+            }
+        }
+        
+        // Load resume on page load
+        document.addEventListener('DOMContentLoaded', loadResume);
+        
+        async function loadResume() {
+            try {
+                const res = await fetch('/api/resume/tailored');
+                if (!res.ok) {
+                    throw new Error(`Failed to load resume: ${res.status} ${res.statusText}`);
+                }
+                resumeData = await res.json();
+                
+                // Initialize sectionOrder if it doesn't exist
+                if (!resumeData.sectionOrder) {
+                    resumeData.sectionOrder = ['skills', 'experience', 'education', 'projects', 'awards'];
+                }
+                
+                populateForm();
+            } catch (e) {
+                console.error('Failed to load:', e);
+                showToast('Failed to load resume data', true);
+            }
+        }
+        
+        function populateForm() {
+            // Personal info
+            document.getElementById('name').value = resumeData.name || '';
+            document.getElementById('email').value = resumeData.contact?.email || '';
+            document.getElementById('phone').value = resumeData.contact?.phone || '';
+            document.getElementById('github').value = resumeData.contact?.github || '';
+            document.getElementById('linkedin').value = resumeData.contact?.linkedin || '';
+            
+            // GPA toggle
+            const gpaToggle = document.getElementById('show-gpa-toggle');
+            if (gpaToggle) {
+                gpaToggle.checked = resumeData.showGpa !== false;
+            }
+            
+            // Load custom section names
+            if (!resumeData.sectionNames) {
+                resumeData.sectionNames = {
+                    personal: 'Personal Information',
+                    skills: 'Skills',
+                    experience: 'Work Experience',
+                    education: 'Education',
+                    projects: 'Projects',
+                    awards: 'Awards & Certificates'
+                };
+            }
+            
+            // Update section names in UI
+            Object.keys(resumeData.sectionNames).forEach(key => {
+                const elem = document.getElementById(`section-name-${key}`);
+                if (elem) {
+                    elem.textContent = resumeData.sectionNames[key];
+                }
+            });
+            
+            // Skills
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+            (resumeData.skills || []).forEach((skill, i) => renderSkill(skill, i));
+            
+            // Experience
+            const expContainer = document.getElementById('experience-container');
+            expContainer.innerHTML = '';
+            (resumeData.experience || []).forEach((exp, i) => renderExperience(exp, i));
+            
+            // Education
+            const eduContainer = document.getElementById('education-container');
+            eduContainer.innerHTML = '';
+            (resumeData.education || []).forEach((edu, i) => renderEducation(edu, i));
+            
+            // Projects
+            const projContainer = document.getElementById('projects-container');
+            projContainer.innerHTML = '';
+            (resumeData.projects || []).forEach((proj, i) => renderProject(proj, i));
+            
+            // Awards
+            const awardsContainer = document.getElementById('awards-container');
+            awardsContainer.innerHTML = '';
+            (resumeData.awards || []).forEach((award, i) => renderAward(award, i));
+        }
+        
+        // Edit section name function
+        function editSectionName(sectionKey) {
+            const nameElement = document.getElementById(`section-name-${sectionKey}`);
+            const currentName = nameElement.textContent;
+            
+            // Create input field
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'section-name-input';
+            input.value = currentName;
+            
+            // Replace text with input
+            nameElement.replaceWith(input);
+            input.focus();
+            input.select();
+            
+            // Handle save on blur or enter
+            const saveName = () => {
+                const newName = input.value.trim() || currentName;
+                
+                // Create new span element
+                const newSpan = document.createElement('span');
+                newSpan.id = `section-name-${sectionKey}`;
+                newSpan.textContent = newName;
+                
+                // Replace input with span
+                input.replaceWith(newSpan);
+                
+                // Update data
+                if (!resumeData.sectionNames) {
+                    resumeData.sectionNames = {};
+                }
+                resumeData.sectionNames[sectionKey] = newName;
+                
+                // Show toast
+                showToast(`✓ Section name updated to "${newName}"`);
+            };
+            
+            input.addEventListener('blur', saveName);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    saveName();
+                } else if (e.key === 'Escape') {
+                    // Restore original name
+                    const newSpan = document.createElement('span');
+                    newSpan.id = `section-name-${sectionKey}`;
+                    newSpan.textContent = currentName;
+                    input.replaceWith(newSpan);
+                }
+            });
+        }
+        
+        // Skill functions
+        function renderSkill(skill, index) {
+            const container = document.getElementById('skills-container');
+            const div = document.createElement('div');
+            div.className = 'item-card';
+            div.id = `skill-${index}`;
+            div.innerHTML = `
+                <button class="remove-btn" onclick="removeSkill(${index})">×</button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" value="${escapeHtml(skill.category || '')}" onchange="updateSkill(${index}, 'category', this.value)" placeholder="e.g., Languages">
+                    </div>
+                    <div class="form-group">
+                        <label>Items (comma-separated)</label>
+                        <input type="text" value="${escapeHtml(skill.items || '')}" onchange="updateSkill(${index}, 'items', this.value)" placeholder="e.g., Python, JavaScript, Go">
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+        
+        function addSkill() {
+            resumeData.skills.push({ category: '', items: '' });
+            renderSkill(resumeData.skills[resumeData.skills.length - 1], resumeData.skills.length - 1);
+        }
+        
+        function updateSkill(index, field, value) {
+            resumeData.skills[index][field] = value;
+        }
+        
+        function removeSkill(index) {
+            resumeData.skills.splice(index, 1);
+            populateForm();
+        }
+        
+        // Experience functions
+        function renderExperience(exp, index) {
+            const container = document.getElementById('experience-container');
+            const div = document.createElement('div');
+            div.className = 'item-card';
+            div.id = `exp-${index}`;
+            
+            // Set enabled to true by default if not set
+            if (exp.enabled === undefined) {
+                exp.enabled = true;
+            }
+            
+            // Apply disabled class if not enabled
+            if (!exp.enabled) {
+                div.classList.add('disabled');
+            }
+            
+            const bulletsHtml = (exp.bullets || []).map((b, i) => `
+                <div class="bullet-row">
+                    <input type="text" value="${escapeHtml(b)}" onchange="updateBullet(${index}, ${i}, this.value)">
+                    <button class="bullet-remove" onclick="removeBullet(${index}, ${i})">×</button>
+                </div>
+            `).join('');
+            
+            div.innerHTML = `
+                <div class="toggle-container">
+                    <span class="toggle-label">${exp.enabled ? 'Shown' : 'Hidden'}</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${exp.enabled ? 'checked' : ''} onchange="toggleExperience(${index}, this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <button class="remove-btn" onclick="removeExperience(${index})">×</button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" value="${escapeHtml(exp.company || '')}" onchange="updateExp(${index}, 'company', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" value="${escapeHtml(exp.location || '')}" onchange="updateExp(${index}, 'location', this.value)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" value="${escapeHtml(exp.title || '')}" onchange="updateExp(${index}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Dates</label>
+                        <input type="text" value="${escapeHtml(exp.dates || '')}" onchange="updateExp(${index}, 'dates', this.value)" placeholder="Mar 2021 - Present">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label>Accomplishments</label>
+                    <div class="bullets-container" id="bullets-${index}">
+                        ${bulletsHtml}
+                    </div>
+                    <button class="add-bullet-btn" onclick="addBullet(${index})">+ Add bullet</button>
+                </div>
+                <div class="form-group">
+                    <label>Tech Stack</label>
+                    <input type="text" value="${escapeHtml(exp.techStack || '')}" onchange="updateExp(${index}, 'techStack', this.value)" placeholder="AWS, Docker, Python">
+                </div>
+            `;
+            container.appendChild(div);
+        }
+        
+        function addExperience() {
+            resumeData.experience.push({ company: '', location: '', title: '', dates: '', bullets: [], techStack: '', enabled: true });
+            renderExperience(resumeData.experience[resumeData.experience.length - 1], resumeData.experience.length - 1);
+        }
+        
+        function updateExp(index, field, value) {
+            resumeData.experience[index][field] = value;
+        }
+        
+        function toggleExperience(index, isEnabled) {
+            resumeData.experience[index].enabled = isEnabled;
+            populateForm();
+            showToast(isEnabled ? '✓ Experience enabled' : '⚠️ Experience hidden from PDF');
+        }
+        
+        function removeExperience(index) {
+            resumeData.experience.splice(index, 1);
+            populateForm();
+        }
+        
+        function addBullet(expIndex) {
+            resumeData.experience[expIndex].bullets.push('');
+            populateForm();
+        }
+        
+        function updateBullet(expIndex, bulletIndex, value) {
+            resumeData.experience[expIndex].bullets[bulletIndex] = value;
+        }
+        
+        function removeBullet(expIndex, bulletIndex) {
+            resumeData.experience[expIndex].bullets.splice(bulletIndex, 1);
+            populateForm();
+        }
+        
+        // Education functions
+        function renderEducation(edu, index) {
+            const container = document.getElementById('education-container');
+            const div = document.createElement('div');
+            div.className = 'item-card';
+            const showGpa = resumeData.showGpa !== false;
+            const gpaFieldClass = showGpa ? '' : 'gpa-field-hidden';
+            
+            div.innerHTML = `
+                <button class="remove-btn" onclick="removeEducation(${index})">×</button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Institution</label>
+                        <input type="text" value="${escapeHtml(edu.institution || '')}" onchange="updateEdu(${index}, 'institution', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Dates</label>
+                        <input type="text" value="${escapeHtml(edu.dates || '')}" onchange="updateEdu(${index}, 'dates', this.value)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Degree</label>
+                        <input type="text" value="${escapeHtml(edu.degree || '')}" onchange="updateEdu(${index}, 'degree', this.value)">
+                    </div>
+                    <div class="form-group gpa-field ${gpaFieldClass}">
+                        <label>GPA</label>
+                        <input type="text" value="${escapeHtml(edu.gpa || '')}" onchange="updateEdu(${index}, 'gpa', this.value)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Relevant Coursework</label>
+                    <textarea onchange="updateEdu(${index}, 'coursework', this.value)">${escapeHtml(edu.coursework || '')}</textarea>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+        
+        function toggleGpaVisibility(isVisible) {
+            resumeData.showGpa = isVisible;
+            // Update all GPA fields visibility
+            const gpaFields = document.querySelectorAll('.gpa-field');
+            gpaFields.forEach(field => {
+                if (isVisible) {
+                    field.classList.remove('gpa-field-hidden');
+                } else {
+                    field.classList.add('gpa-field-hidden');
+                }
+            });
+            showToast(isVisible ? '✓ GPA is now visible' : '⚠️ GPA is now hidden');
+        }
+        
+        function addEducation() {
+            resumeData.education.push({ institution: '', dates: '', degree: '', gpa: '', coursework: '' });
+            renderEducation(resumeData.education[resumeData.education.length - 1], resumeData.education.length - 1);
+        }
+        
+        function updateEdu(index, field, value) {
+            resumeData.education[index][field] = value;
+        }
+        
+        function removeEducation(index) {
+            resumeData.education.splice(index, 1);
+            populateForm();
+        }
+        
+        // Project functions
+        function renderProject(proj, index) {
+            const container = document.getElementById('projects-container');
+            const div = document.createElement('div');
+            div.className = 'item-card';
+            div.id = `proj-${index}`;
+            
+            // Set enabled to true by default if not set
+            if (proj.enabled === undefined) {
+                proj.enabled = true;
+            }
+            
+            // Set useBullets to false by default if not set
+            if (proj.useBullets === undefined) {
+                proj.useBullets = false;
+            }
+            
+            // Initialize bullets array if using bullets mode
+            if (proj.useBullets && !proj.bullets) {
+                proj.bullets = [];
+            }
+            
+            // Apply disabled class if not enabled
+            if (!proj.enabled) {
+                div.classList.add('disabled');
+            }
+            
+            // Check if this is first or last project
+            const isFirst = index === 0;
+            const isLast = index === resumeData.projects.length - 1;
+            
+            // Build bullets HTML if in bullet mode
+            const bulletsHtml = proj.useBullets ? (proj.bullets || []).map((b, i) => `
+                <div class="bullet-row">
+                    <input type="text" value="${escapeHtml(b)}" onchange="updateProjectBullet(${index}, ${i}, this.value)">
+                    <button class="bullet-remove" onclick="removeProjectBullet(${index}, ${i})">×</button>
+                </div>
+            `).join('') : '';
+            
+            // Build description or bullets section
+            const contentSection = proj.useBullets ? `
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label>Project Details</label>
+                    <div class="bullets-container" id="proj-bullets-${index}">
+                        ${bulletsHtml}
+                    </div>
+                    <button class="add-bullet-btn" onclick="addProjectBullet(${index})">+ Add bullet</button>
+                </div>
+            ` : `
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea onchange="updateProj(${index}, 'description', this.value)">${escapeHtml(proj.description || '')}</textarea>
+                </div>
+            `;
+            
+            div.innerHTML = `
+                <div class="toggle-container">
+                    <span class="toggle-label">${proj.enabled ? 'Shown' : 'Hidden'}</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${proj.enabled ? 'checked' : ''} onchange="toggleProject(${index}, this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="reorder-controls" style="right: 140px;">
+                    <button class="reorder-btn" onclick="moveProjectUp(${index})" ${isFirst ? 'disabled' : ''} title="Move Up">▲</button>
+                    <button class="reorder-btn" onclick="moveProjectDown(${index})" ${isLast ? 'disabled' : ''} title="Move Down">▼</button>
+                </div>
+                <button class="remove-btn" onclick="removeProject(${index})">×</button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Project Name</label>
+                        <input type="text" value="${escapeHtml(proj.name || '')}" onchange="updateProj(${index}, 'name', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" value="${escapeHtml(proj.year || '')}" onchange="updateProj(${index}, 'year', this.value)">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="display: flex; align-items: center; gap: 10px;">
+                        <span>Content Format:</span>
+                        <button class="add-bullet-btn" style="width: auto; padding: 6px 12px; margin: 0;" onclick="toggleProjectContentType(${index})">
+                            ${proj.useBullets ? '📝 Switch to Paragraph' : '• Switch to Bullet Points'}
+                        </button>
+                    </label>
+                </div>
+                ${contentSection}
+            `;
+            container.appendChild(div);
+        }
+        
+        function addProject() {
+            resumeData.projects.push({ name: '', year: '', description: '', enabled: true, useBullets: false, bullets: [] });
+            renderProject(resumeData.projects[resumeData.projects.length - 1], resumeData.projects.length - 1);
+        }
+        
+        function updateProj(index, field, value) {
+            resumeData.projects[index][field] = value;
+        }
+        
+        function toggleProject(index, isEnabled) {
+            resumeData.projects[index].enabled = isEnabled;
+            populateForm();
+            showToast(isEnabled ? '✓ Project enabled' : '⚠️ Project hidden from PDF');
+        }
+        
+        function toggleProjectContentType(index) {
+            const project = resumeData.projects[index];
+            project.useBullets = !project.useBullets;
+            
+            // Initialize arrays/fields as needed
+            if (project.useBullets && !project.bullets) {
+                project.bullets = [];
+            }
+            if (!project.useBullets && !project.description) {
+                project.description = '';
+            }
+            
+            populateForm();
+            showToast(project.useBullets ? '✓ Switched to Bullet Points' : '✓ Switched to Paragraph');
+        }
+        
+        function addProjectBullet(projIndex) {
+            if (!resumeData.projects[projIndex].bullets) {
+                resumeData.projects[projIndex].bullets = [];
+            }
+            resumeData.projects[projIndex].bullets.push('');
+            populateForm();
+        }
+        
+        function updateProjectBullet(projIndex, bulletIndex, value) {
+            resumeData.projects[projIndex].bullets[bulletIndex] = value;
+        }
+        
+        function removeProjectBullet(projIndex, bulletIndex) {
+            resumeData.projects[projIndex].bullets.splice(bulletIndex, 1);
+            populateForm();
+        }
+        
+        function removeProject(index) {
+            resumeData.projects.splice(index, 1);
+            populateForm();
+        }
+        
+        function moveProjectUp(index) {
+            if (index === 0) return;
+            // Swap with previous item
+            const temp = resumeData.projects[index];
+            resumeData.projects[index] = resumeData.projects[index - 1];
+            resumeData.projects[index - 1] = temp;
+            populateForm();
+            showToast('✓ Project moved up');
+        }
+        
+        function moveProjectDown(index) {
+            if (index === resumeData.projects.length - 1) return;
+            // Swap with next item
+            const temp = resumeData.projects[index];
+            resumeData.projects[index] = resumeData.projects[index + 1];
+            resumeData.projects[index + 1] = temp;
+            populateForm();
+            showToast('✓ Project moved down');
+        }
+        
+        // Award functions
+        function renderAward(award, index) {
+            const container = document.getElementById('awards-container');
+            const div = document.createElement('div');
+            div.className = 'item-card';
+            
+            // Handle both old string format and new object format
+            const awardData = typeof award === 'string' ? { name: award, enabled: true } : award;
+            const isEnabled = awardData.enabled !== false;
+            
+            div.classList.toggle('disabled', !isEnabled);
+            div.id = `award-${index}`;
+            
+            div.innerHTML = `
+                <button class="remove-btn" onclick="removeAward(${index})">×</button>
+                <div class="toggle-container">
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${isEnabled ? 'checked' : ''} onchange="toggleAward(${index}, this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label">${isEnabled ? 'Shown' : 'Hidden'}</span>
+                </div>
+                ${!isEnabled ? '<div class="disabled-label">🚫 Hidden from PDF</div>' : ''}
+                <div class="form-group">
+                    <label>Award/Certificate</label>
+                    <input type="text" value="${escapeHtml(awardData.name || '')}" onchange="updateAward(${index}, this.value)">
+                </div>
+            `;
+            container.appendChild(div);
+        }
+        
+        function addAward() {
+            resumeData.awards.push({ name: '', enabled: true });
+            renderAward({ name: '', enabled: true }, resumeData.awards.length - 1);
+        }
+        
+        function updateAward(index, value) {
+            // Handle both old string format and new object format
+            if (typeof resumeData.awards[index] === 'string') {
+                resumeData.awards[index] = { name: value, enabled: true };
+            } else {
+                resumeData.awards[index].name = value;
+            }
+        }
+        
+        function toggleAward(index, isEnabled) {
+            // Convert to object format if needed
+            if (typeof resumeData.awards[index] === 'string') {
+                resumeData.awards[index] = { name: resumeData.awards[index], enabled: isEnabled };
+            } else {
+                resumeData.awards[index].enabled = isEnabled;
+            }
+            
+            // Update UI
+            const card = document.getElementById(`award-${index}`);
+            const toggleLabel = card.querySelector('.toggle-label');
+            const disabledLabel = card.querySelector('.disabled-label');
+            
+            card.classList.toggle('disabled', !isEnabled);
+            toggleLabel.textContent = isEnabled ? 'Shown' : 'Hidden';
+            
+            if (isEnabled) {
+                if (disabledLabel) disabledLabel.remove();
+            } else {
+                if (!disabledLabel) {
+                    const label = document.createElement('div');
+                    label.className = 'disabled-label';
+                    label.textContent = '🚫 Hidden from PDF';
+                    card.querySelector('.toggle-container').after(label);
+                }
+            }
+        }
+        
+        function removeAward(index) {
+            resumeData.awards.splice(index, 1);
+            populateForm();
+        }
+        
+        // AI Tailor function
+        async function tailorResume() {
+            const jobDesc = document.getElementById('job-description').value.trim();
+            if (!jobDesc) {
+                showToast('Please paste a job description first', true);
+                return;
+            }
+            
+            showToast('🤖 AI is tailoring your resume...');
+            
+            try {
+                const res = await fetch('/api/tailor', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_description: jobDesc })
+                });
+                
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.error || 'Tailoring failed');
+                }
+                
+                resumeData = await res.json();
+                populateForm();
+                showToast('✨ Resume tailored successfully!');
+            } catch (e) {
+                console.error('Tailor error:', e);
+                showToast(e.message || 'Failed to tailor resume', true);
+            }
+        }
+        
+        // Save and Download
+        async function saveResume() {
+            // Collect personal info
+            resumeData.name = document.getElementById('name').value;
+            resumeData.contact = {
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                github: document.getElementById('github').value,
+                linkedin: document.getElementById('linkedin').value
+            };
+            
+            try {
+                const res = await fetch('/api/resume/tailored', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(resumeData)
+                });
+                if (!res.ok) {
+                    const errorData = await res.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Failed to save: ${res.status} ${res.statusText}`);
+                }
+                showToast('✓ Tailored resume saved!');
+            } catch (e) {
+                console.error('Save error:', e);
+                showToast(e.message || 'Failed to save', true);
+            }
+        }
+        
+        async function importFromMaster() {
+            // Confirm before importing
+            const confirmed = confirm('⚠️ This will replace ALL current data in your Tailored Resume with data from the Master Resume. This action cannot be undone.\n\nAre you sure you want to continue?');
+            
+            if (!confirmed) {
+                return;
+            }
+            
+            try {
+                // Fetch master resume data
+                const res = await fetch('/api/resume');
+                if (!res.ok) {
+                    throw new Error(`Failed to load master resume: ${res.status} ${res.statusText}`);
+                }
+                
+                const masterData = await res.json();
+                
+                // Ensure all experiences, projects, and awards have the enabled field
+                if (masterData.experience) {
+                    masterData.experience = masterData.experience.map(exp => ({
+                        ...exp,
+                        enabled: true
+                    }));
+                }
+                
+                if (masterData.projects) {
+                    masterData.projects = masterData.projects.map(proj => ({
+                        ...proj,
+                        enabled: true
+                    }));
+                }
+                
+                if (masterData.awards) {
+                    masterData.awards = masterData.awards.map(award => {
+                        if (typeof award === 'string') {
+                            return { name: award, enabled: true };
+                        }
+                        return { ...award, enabled: true };
+                    });
+                }
+                
+                // Initialize section order if not present
+                if (!masterData.sectionOrder) {
+                    masterData.sectionOrder = ['skills', 'experience', 'education', 'projects', 'awards'];
+                }
+                
+                // Replace current data with master data
+                resumeData = masterData;
+                
+                // Save the imported data to tailored resume
+                const saveRes = await fetch('/api/resume/tailored', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(resumeData)
+                });
+                
+                if (!saveRes.ok) {
+                    throw new Error(`Failed to save imported data: ${saveRes.status} ${saveRes.statusText}`);
+                }
+                
+                // Refresh the form with new data
+                populateForm();
+                
+                showToast('✓ Successfully imported from Master Resume!');
+            } catch (e) {
+                console.error('Import error:', e);
+                showToast(e.message || 'Failed to import from Master Resume', true);
+            }
+        }
+        
+        function downloadPDF() {
+            // Ensure section order is saved
+            if (!resumeData.sectionOrder) {
+                resumeData.sectionOrder = ['skills', 'experience', 'education', 'projects', 'awards'];
+            }
+            saveResume().then(() => {
+                window.open('/preview?type=tailored', '_blank');
+            });
+        }
+        
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.borderColor = isError ? 'var(--danger)' : 'var(--accent-green)';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
