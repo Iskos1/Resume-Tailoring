@@ -143,6 +143,46 @@
             transform: rotate(-90deg);
         }
         
+        /* Drag and Drop */
+        .section {
+            transition: opacity 0.2s, border 0.2s;
+        }
+        
+        .section.dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--accent);
+        }
+        
+        .section.drag-over {
+            border-top: 3px solid var(--accent-green);
+        }
+        
+        .drag-handle {
+            cursor: move;
+            opacity: 0.5;
+            margin-right: 8px;
+            user-select: none;
+            padding: 4px;
+        }
+        
+        .drag-handle:hover {
+            opacity: 1;
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        /* Allow text selection in section content */
+        .section-content * {
+            cursor: text;
+            user-select: text;
+        }
+        
+        .section-content input,
+        .section-content textarea,
+        .section-content button {
+            cursor: auto;
+        }
+        
         /* Form elements */
         .form-row {
             display: grid;
@@ -198,10 +238,31 @@
             padding: 16px;
             margin-bottom: 12px;
             position: relative;
+            transition: opacity 0.3s, border-color 0.3s;
         }
         
         .item-card:last-child {
             margin-bottom: 0;
+        }
+        
+        .item-card.disabled {
+            opacity: 0.5;
+            border-color: var(--danger);
+            border-style: dashed;
+        }
+        
+        .item-card.disabled::before {
+            content: '🚫 Hidden from PDF';
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            font-size: 11px;
+            color: var(--danger);
+            font-weight: 600;
+            background: var(--bg-card);
+            padding: 2px 8px;
+            border-radius: 4px;
+            z-index: 1;
         }
         
         .remove-btn {
@@ -253,6 +314,71 @@
             cursor: not-allowed;
             border-color: var(--border);
             color: var(--text-dim);
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            position: absolute;
+            top: 12px;
+            right: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+        
+        .toggle-label {
+            font-size: 11px;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            cursor: pointer;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border);
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider:before {
+            content: "";
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--accent-green);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        .gpa-field-hidden {
+            display: none !important;
         }
         
         .add-btn {
@@ -367,51 +493,14 @@
             transform: translateY(-1px);
         }
         
-        .btn-testing {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .btn-warning {
+            background: #f0883e;
             color: #fff;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
         
-        .btn-testing:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-        
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-            cursor: pointer;
-        }
-        
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .toggle-switch input:checked + span {
-            background-color: var(--accent-green);
-        }
-        
-        .toggle-switch input:checked + span + span {
-            transform: translateX(20px);
-        }
-        
-        .toggle-switch input:not(:checked) + span {
-            background-color: var(--border);
-        }
-        
-        .toggle-switch input:not(:checked) + span + span {
-            transform: translateX(0);
-        }
-        
-        .gpa-field-hidden {
-            display: none !important;
+        .btn-warning:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
         
         /* Toast */
@@ -451,38 +540,10 @@
 <body>
     <div class="container">
         <header>
-            <h1>📄 Master Resume</h1>
-            <p class="subtitle">
-                Edit your resume sections below • 
-                <a href="/tailored" style="color: var(--accent);">View Tailored Resume →</a> • 
-                <a href="/master_tailoring_test.html" style="color: var(--accent-green); font-weight: 600;">🔬 Scientific Testing Lab →</a>
-            </p>
+            <h1>📝 Tailored Resume</h1>
+            <p class="subtitle">Your AI-optimized resume • <a href="/" style="color: var(--accent);">Back to Master Resume</a></p>
         </header>
         
-        <!-- AI Tailor Section -->
-        <div class="section" id="section-tailor">
-            <div class="section-header" onclick="toggleSection('section-tailor')">
-                <div class="section-title-group">
-                    <h2><span>🤖</span> <span id="section-name-tailor">AI Resume Tailor</span></h2>
-                    <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('tailor')" title="Edit section name">✏️</button>
-                </div>
-                <span class="chevron">▼</span>
-            </div>
-            <div class="section-content">
-                <div class="form-group">
-                    <label>🔑 OpenAI API Key <small style="color: var(--text-dim);">(stored locally, never sent anywhere except OpenAI)</small></label>
-                    <input type="password" id="api-key" placeholder="sk-..." style="font-family: var(--mono); font-size: 13px;" onchange="saveApiKey()" />
-                    <small style="color: var(--text-dim); display: block; margin-top: 4px;">
-                        Get your API key at <a href="https://platform.openai.com/api-keys" target="_blank" style="color: var(--accent);">platform.openai.com/api-keys</a>
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label>Paste Job Description</label>
-                    <textarea id="job-description" placeholder="Paste the job description here..." style="min-height: 150px;"></textarea>
-                </div>
-                <button class="btn btn-primary" onclick="tailorResume()" style="margin-top: 12px;">✨ Tailor Resume with AI</button>
-            </div>
-        </div>
         
         <!-- Personal Info -->
         <div class="section" id="section-personal">
@@ -524,10 +585,15 @@
         </div>
         
         <!-- Skills -->
-        <div class="section" id="section-skills">
+        <div class="section" id="section-skills"
+             ondragover="handleDragOver(event, 'skills')"
+             ondragleave="handleDragLeave(event, 'skills')"
+             ondrop="handleDrop(event, 'skills')">
             <div class="section-header" onclick="toggleSection('section-skills')">
                 <div class="section-title-group">
-                    <h2><span>🛠️</span> <span id="section-name-skills">Skills</span></h2>
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'skills')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🛠️</span> <span id="section-name-skills">Skills</span></h2>
                     <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('skills')" title="Edit section name">✏️</button>
                 </div>
                 <span class="chevron">▼</span>
@@ -539,10 +605,15 @@
         </div>
         
         <!-- Experience -->
-        <div class="section" id="section-experience">
+        <div class="section" id="section-experience"
+             ondragover="handleDragOver(event, 'experience')"
+             ondragleave="handleDragLeave(event, 'experience')"
+             ondrop="handleDrop(event, 'experience')">
             <div class="section-header" onclick="toggleSection('section-experience')">
                 <div class="section-title-group">
-                    <h2><span>💼</span> <span id="section-name-experience">Work Experience</span></h2>
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'experience')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>💼</span> <span id="section-name-experience">Work Experience</span></h2>
                     <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('experience')" title="Edit section name">✏️</button>
                 </div>
                 <span class="chevron">▼</span>
@@ -554,10 +625,15 @@
         </div>
         
         <!-- Education -->
-        <div class="section" id="section-education">
+        <div class="section" id="section-education"
+             ondragover="handleDragOver(event, 'education')"
+             ondragleave="handleDragLeave(event, 'education')"
+             ondrop="handleDrop(event, 'education')">
             <div class="section-header" onclick="toggleSection('section-education')">
                 <div class="section-title-group">
-                    <h2><span>🎓</span> <span id="section-name-education">Education</span></h2>
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'education')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🎓</span> <span id="section-name-education">Education</span></h2>
                     <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('education')" title="Edit section name">✏️</button>
                 </div>
                 <span class="chevron">▼</span>
@@ -565,10 +641,9 @@
             <div class="section-content">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;">
                     <label style="flex: 1; font-size: 14px; color: var(--text); font-weight: 500;">Show GPA on Resume</label>
-                    <label class="toggle-switch" style="width: 44px; height: 24px; position: relative; display: inline-block; cursor: pointer;">
-                        <input type="checkbox" id="show-gpa-toggle" checked onchange="toggleGpaVisibility(this.checked)" style="opacity: 0; width: 0; height: 0;">
-                        <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--accent-green); border-radius: 24px; transition: 0.3s;"></span>
-                        <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: 0.3s; transform: translateX(20px);"></span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="show-gpa-toggle" checked onchange="toggleGpaVisibility(this.checked)">
+                        <span class="toggle-slider"></span>
                     </label>
                 </div>
                 <div id="education-container"></div>
@@ -577,10 +652,15 @@
         </div>
         
         <!-- Projects -->
-        <div class="section" id="section-projects">
+        <div class="section" id="section-projects"
+             ondragover="handleDragOver(event, 'projects')"
+             ondragleave="handleDragLeave(event, 'projects')"
+             ondrop="handleDrop(event, 'projects')">
             <div class="section-header" onclick="toggleSection('section-projects')">
                 <div class="section-title-group">
-                    <h2><span>🚀</span> <span id="section-name-projects">Projects</span></h2>
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'projects')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🚀</span> <span id="section-name-projects">Projects</span></h2>
                     <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('projects')" title="Edit section name">✏️</button>
                 </div>
                 <span class="chevron">▼</span>
@@ -592,10 +672,15 @@
         </div>
         
         <!-- Awards -->
-        <div class="section" id="section-awards">
+        <div class="section" id="section-awards"
+             ondragover="handleDragOver(event, 'awards')"
+             ondragleave="handleDragLeave(event, 'awards')"
+             ondrop="handleDrop(event, 'awards')">
             <div class="section-header" onclick="toggleSection('section-awards')">
                 <div class="section-title-group">
-                    <h2><span>🏆</span> <span id="section-name-awards">Awards & Certificates</span></h2>
+                    <h2><span class="drag-handle" draggable="true" 
+                        ondragstart="handleDragStart(event, 'awards')"
+                        ondragend="handleDragEnd(event)">⋮⋮</span><span>🏆</span> <span id="section-name-awards">Awards & Certificates</span></h2>
                     <button class="edit-section-name" onclick="event.stopPropagation(); editSectionName('awards')" title="Edit section name">✏️</button>
                 </div>
                 <span class="chevron">▼</span>
@@ -607,18 +692,9 @@
         </div>
         
         <div class="actions">
-            <button class="btn btn-primary" onclick="saveResume()">💾 Save Master Resume</button>
-            <button class="btn btn-secondary" onclick="copyToTailored()">📋 Copy to Tailored</button>
+            <button class="btn btn-primary" onclick="saveResume()">💾 Save Tailored Resume</button>
             <button class="btn btn-secondary" onclick="downloadPDF()">📥 Download PDF</button>
-        </div>
-        
-        <div style="margin-top: 20px; text-align: center;">
-            <button class="btn btn-testing" onclick="window.open('/master_tailoring_test.html', '_blank')" style="width: 100%; max-width: 600px; margin: 0 auto;">
-                🔬 Open Scientific Testing Lab - Analyze Resume with 50+ Research Studies
-            </button>
-            <p style="color: var(--text-dim); font-size: 13px; margin-top: 8px;">
-                Get scientific analysis: ATS optimization, keyword matching, action verb quality, and more
-            </p>
+            <button class="btn btn-warning" onclick="importFromMaster()">🔄 Import from Master Resume</button>
         </div>
         
     </div>
@@ -642,9 +718,9 @@
             education: [],
             projects: [],
             awards: [],
+            sectionOrder: ['skills', 'experience', 'education', 'projects', 'awards'],
             showGpa: true,
             sectionNames: {
-                tailor: 'AI Resume Tailor',
                 personal: 'Personal Information',
                 skills: 'Skills',
                 experience: 'Work Experience',
@@ -659,33 +735,173 @@
             document.getElementById(id).classList.toggle('collapsed');
         }
         
+        // Drag and Drop functionality
+        let draggedSection = null;
+        
+        function handleDragStart(e, sectionId) {
+            // Stop event propagation to prevent triggering section toggle
+            e.stopPropagation();
+            
+            draggedSection = sectionId;
+            e.target.closest('.section').classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', sectionId);
+        }
+        
+        function handleDragOver(e, sectionId) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            
+            const section = document.getElementById('section-' + sectionId);
+            section.classList.add('drag-over');
+            
+            // Auto-scroll when near edges
+            const scrollThreshold = 100;
+            const viewportHeight = window.innerHeight;
+            const mouseY = e.clientY;
+            
+            if (mouseY < scrollThreshold) {
+                startAutoScroll('up');
+            } else if (mouseY > viewportHeight - scrollThreshold) {
+                startAutoScroll('down');
+            } else {
+                stopAutoScroll();
+            }
+            
+            return false;
+        }
+        
+        function handleDragLeave(e, sectionId) {
+            const section = document.getElementById('section-' + sectionId);
+            section.classList.remove('drag-over');
+            stopAutoScroll();
+        }
+        
+        function handleDrop(e, targetSectionId) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            e.preventDefault();
+            stopAutoScroll();
+            
+            console.log('Dropped', draggedSection, 'onto', targetSectionId);
+            
+            if (draggedSection && draggedSection !== targetSectionId) {
+                // Update section order
+                const currentOrder = [...resumeData.sectionOrder];
+                const draggedIndex = currentOrder.indexOf(draggedSection);
+                const targetIndex = currentOrder.indexOf(targetSectionId);
+                
+                console.log('Current order:', currentOrder);
+                console.log('Dragged index:', draggedIndex, 'Target index:', targetIndex);
+                
+                if (draggedIndex !== -1 && targetIndex !== -1) {
+                    // Remove dragged section from its current position
+                    currentOrder.splice(draggedIndex, 1);
+                    // Insert it at the target position
+                    currentOrder.splice(targetIndex, 0, draggedSection);
+                    
+                    resumeData.sectionOrder = currentOrder;
+                    console.log('New order:', currentOrder);
+                    
+                    // Reorder DOM elements
+                    reorderSections();
+                }
+            }
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('drag-over');
+                section.classList.remove('dragging');
+            });
+            
+            draggedSection = null;
+            
+            return false;
+        }
+        
+        function handleDragEnd(e) {
+            stopAutoScroll();
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('drag-over');
+                section.classList.remove('dragging');
+            });
+        }
+        
+        function reorderSections() {
+            const container = document.querySelector('.container');
+            const sections = {};
+            
+            // Store references to all sections
+            resumeData.sectionOrder.forEach(id => {
+                sections[id] = document.getElementById('section-' + id);
+            });
+            
+            // Get the actions div (save/download buttons)
+            const actionsDiv = document.querySelector('.actions');
+            
+            // Remove all sections from DOM
+            Object.values(sections).forEach(section => {
+                if (section && section.parentNode) {
+                    section.parentNode.removeChild(section);
+                }
+            });
+            
+            // Re-add sections in new order
+            resumeData.sectionOrder.forEach(id => {
+                const section = sections[id];
+                if (section) {
+                    container.insertBefore(section, actionsDiv);
+                }
+            });
+            
+            // Save the new order
+            saveResume();
+            
+            showToast('✓ Section order updated!');
+        }
+        
+        // Auto-scroll when dragging near edges
+        let autoScrollInterval = null;
+        
+        function startAutoScroll(direction) {
+            stopAutoScroll();
+            autoScrollInterval = setInterval(() => {
+                const scrollAmount = direction === 'up' ? -10 : 10;
+                window.scrollBy(0, scrollAmount);
+            }, 50);
+        }
+        
+        function stopAutoScroll() {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = null;
+            }
+        }
+        
         // Load resume on page load
         document.addEventListener('DOMContentLoaded', loadResume);
         
         async function loadResume() {
             try {
-                const saved = localStorage.getItem('resumeData');
+                const saved = localStorage.getItem('tailoredResumeData');
                 if (saved) {
                     resumeData = JSON.parse(saved);
+                } else {
+                    throw new Error('No tailored resume found. Please tailor your resume first.');
                 }
-                populateForm();
                 
-                // Load API key
-                const apiKey = localStorage.getItem('openai_api_key');
-                if (apiKey) {
-                    document.getElementById('api-key').value = apiKey;
+                // Initialize sectionOrder if it doesn't exist
+                if (!resumeData.sectionOrder) {
+                    resumeData.sectionOrder = ['skills', 'experience', 'education', 'projects', 'awards'];
                 }
+                
+                populateForm();
             } catch (e) {
                 console.error('Failed to load:', e);
                 showToast('Failed to load resume data', true);
-            }
-        }
-        
-        function saveApiKey() {
-            const apiKey = document.getElementById('api-key').value.trim();
-            if (apiKey) {
-                localStorage.setItem('openai_api_key', apiKey);
-                showToast('✓ API key saved locally');
             }
         }
         
@@ -706,7 +922,6 @@
             // Load custom section names
             if (!resumeData.sectionNames) {
                 resumeData.sectionNames = {
-                    tailor: 'AI Resume Tailor',
                     personal: 'Personal Information',
                     skills: 'Skills',
                     experience: 'Work Experience',
@@ -845,6 +1060,16 @@
             div.className = 'item-card';
             div.id = `exp-${index}`;
             
+            // Set enabled to true by default if not set
+            if (exp.enabled === undefined) {
+                exp.enabled = true;
+            }
+            
+            // Apply disabled class if not enabled
+            if (!exp.enabled) {
+                div.classList.add('disabled');
+            }
+            
             const bulletsHtml = (exp.bullets || []).map((b, i) => `
                 <div class="bullet-row">
                     <input type="text" value="${escapeHtml(b)}" onchange="updateBullet(${index}, ${i}, this.value)">
@@ -853,6 +1078,13 @@
             `).join('');
             
             div.innerHTML = `
+                <div class="toggle-container">
+                    <span class="toggle-label">${exp.enabled ? 'Shown' : 'Hidden'}</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${exp.enabled ? 'checked' : ''} onchange="toggleExperience(${index}, this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
                 <button class="remove-btn" onclick="removeExperience(${index})">×</button>
                 <div class="form-row">
                     <div class="form-group">
@@ -890,12 +1122,18 @@
         }
         
         function addExperience() {
-            resumeData.experience.push({ company: '', location: '', title: '', dates: '', bullets: [], techStack: '' });
+            resumeData.experience.push({ company: '', location: '', title: '', dates: '', bullets: [], techStack: '', enabled: true });
             renderExperience(resumeData.experience[resumeData.experience.length - 1], resumeData.experience.length - 1);
         }
         
         function updateExp(index, field, value) {
             resumeData.experience[index][field] = value;
+        }
+        
+        function toggleExperience(index, isEnabled) {
+            resumeData.experience[index].enabled = isEnabled;
+            populateForm();
+            showToast(isEnabled ? '✓ Experience enabled' : '⚠️ Experience hidden from PDF');
         }
         
         function removeExperience(index) {
@@ -988,11 +1226,65 @@
             const container = document.getElementById('projects-container');
             const div = document.createElement('div');
             div.className = 'item-card';
+            div.id = `proj-${index}`;
+            
+            // Set enabled to true by default if not set
+            if (proj.enabled === undefined) {
+                proj.enabled = true;
+            }
+            
+            // Set useBullets to false by default if not set
+            if (proj.useBullets === undefined) {
+                proj.useBullets = false;
+            }
+            
+            // Initialize bullets array if using bullets mode
+            if (proj.useBullets && !proj.bullets) {
+                proj.bullets = [];
+            }
+            
+            // Apply disabled class if not enabled
+            if (!proj.enabled) {
+                div.classList.add('disabled');
+            }
+            
+            // Check if this is first or last project
             const isFirst = index === 0;
             const isLast = index === resumeData.projects.length - 1;
             
+            // Build bullets HTML if in bullet mode
+            const bulletsHtml = proj.useBullets ? (proj.bullets || []).map((b, i) => `
+                <div class="bullet-row">
+                    <input type="text" value="${escapeHtml(b)}" onchange="updateProjectBullet(${index}, ${i}, this.value)">
+                    <button class="bullet-remove" onclick="removeProjectBullet(${index}, ${i})">×</button>
+                </div>
+            `).join('') : '';
+            
+            // Build description or bullets section
+            const contentSection = proj.useBullets ? `
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label>Project Details</label>
+                    <div class="bullets-container" id="proj-bullets-${index}">
+                        ${bulletsHtml}
+                    </div>
+                    <button class="add-bullet-btn" onclick="addProjectBullet(${index})">+ Add bullet</button>
+                </div>
+            ` : `
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea onchange="updateProj(${index}, 'description', this.value)">${escapeHtml(proj.description || '')}</textarea>
+                </div>
+            `;
+            
             div.innerHTML = `
-                <div class="reorder-controls">
+                <div class="toggle-container">
+                    <span class="toggle-label">${proj.enabled ? 'Shown' : 'Hidden'}</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${proj.enabled ? 'checked' : ''} onchange="toggleProject(${index}, this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="reorder-controls" style="right: 140px;">
                     <button class="reorder-btn" onclick="moveProjectUp(${index})" ${isFirst ? 'disabled' : ''} title="Move Up">▲</button>
                     <button class="reorder-btn" onclick="moveProjectDown(${index})" ${isLast ? 'disabled' : ''} title="Move Down">▼</button>
                 </div>
@@ -1007,21 +1299,65 @@
                         <input type="text" value="${escapeHtml(proj.year || '')}" onchange="updateProj(${index}, 'year', this.value)">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea onchange="updateProj(${index}, 'description', this.value)">${escapeHtml(proj.description || '')}</textarea>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="display: flex; align-items: center; gap: 10px;">
+                        <span>Content Format:</span>
+                        <button class="add-bullet-btn" style="width: auto; padding: 6px 12px; margin: 0;" onclick="toggleProjectContentType(${index})">
+                            ${proj.useBullets ? '📝 Switch to Paragraph' : '• Switch to Bullet Points'}
+                        </button>
+                    </label>
                 </div>
+                ${contentSection}
             `;
             container.appendChild(div);
         }
         
         function addProject() {
-            resumeData.projects.push({ name: '', year: '', description: '' });
+            resumeData.projects.push({ name: '', year: '', description: '', enabled: true, useBullets: false, bullets: [] });
             renderProject(resumeData.projects[resumeData.projects.length - 1], resumeData.projects.length - 1);
         }
         
         function updateProj(index, field, value) {
             resumeData.projects[index][field] = value;
+        }
+        
+        function toggleProject(index, isEnabled) {
+            resumeData.projects[index].enabled = isEnabled;
+            populateForm();
+            showToast(isEnabled ? '✓ Project enabled' : '⚠️ Project hidden from PDF');
+        }
+        
+        function toggleProjectContentType(index) {
+            const project = resumeData.projects[index];
+            project.useBullets = !project.useBullets;
+            
+            // Initialize arrays/fields as needed
+            if (project.useBullets && !project.bullets) {
+                project.bullets = [];
+            }
+            if (!project.useBullets && !project.description) {
+                project.description = '';
+            }
+            
+            populateForm();
+            showToast(project.useBullets ? '✓ Switched to Bullet Points' : '✓ Switched to Paragraph');
+        }
+        
+        function addProjectBullet(projIndex) {
+            if (!resumeData.projects[projIndex].bullets) {
+                resumeData.projects[projIndex].bullets = [];
+            }
+            resumeData.projects[projIndex].bullets.push('');
+            populateForm();
+        }
+        
+        function updateProjectBullet(projIndex, bulletIndex, value) {
+            resumeData.projects[projIndex].bullets[bulletIndex] = value;
+        }
+        
+        function removeProjectBullet(projIndex, bulletIndex) {
+            resumeData.projects[projIndex].bullets.splice(bulletIndex, 1);
+            populateForm();
         }
         
         function removeProject(index) {
@@ -1054,23 +1390,72 @@
             const container = document.getElementById('awards-container');
             const div = document.createElement('div');
             div.className = 'item-card';
+            
+            // Handle both old string format and new object format
+            const awardData = typeof award === 'string' ? { name: award, enabled: true } : award;
+            const isEnabled = awardData.enabled !== false;
+            
+            div.classList.toggle('disabled', !isEnabled);
+            div.id = `award-${index}`;
+            
             div.innerHTML = `
                 <button class="remove-btn" onclick="removeAward(${index})">×</button>
+                <div class="toggle-container">
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${isEnabled ? 'checked' : ''} onchange="toggleAward(${index}, this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label">${isEnabled ? 'Shown' : 'Hidden'}</span>
+                </div>
+                ${!isEnabled ? '<div class="disabled-label">🚫 Hidden from PDF</div>' : ''}
                 <div class="form-group">
                     <label>Award/Certificate</label>
-                    <input type="text" value="${escapeHtml(award || '')}" onchange="updateAward(${index}, this.value)">
+                    <input type="text" value="${escapeHtml(awardData.name || '')}" onchange="updateAward(${index}, this.value)">
                 </div>
             `;
             container.appendChild(div);
         }
         
         function addAward() {
-            resumeData.awards.push('');
-            renderAward('', resumeData.awards.length - 1);
+            resumeData.awards.push({ name: '', enabled: true });
+            renderAward({ name: '', enabled: true }, resumeData.awards.length - 1);
         }
         
         function updateAward(index, value) {
-            resumeData.awards[index] = value;
+            // Handle both old string format and new object format
+            if (typeof resumeData.awards[index] === 'string') {
+                resumeData.awards[index] = { name: value, enabled: true };
+            } else {
+                resumeData.awards[index].name = value;
+            }
+        }
+        
+        function toggleAward(index, isEnabled) {
+            // Convert to object format if needed
+            if (typeof resumeData.awards[index] === 'string') {
+                resumeData.awards[index] = { name: resumeData.awards[index], enabled: isEnabled };
+            } else {
+                resumeData.awards[index].enabled = isEnabled;
+            }
+            
+            // Update UI
+            const card = document.getElementById(`award-${index}`);
+            const toggleLabel = card.querySelector('.toggle-label');
+            const disabledLabel = card.querySelector('.disabled-label');
+            
+            card.classList.toggle('disabled', !isEnabled);
+            toggleLabel.textContent = isEnabled ? 'Shown' : 'Hidden';
+            
+            if (isEnabled) {
+                if (disabledLabel) disabledLabel.remove();
+            } else {
+                if (!disabledLabel) {
+                    const label = document.createElement('div');
+                    label.className = 'disabled-label';
+                    label.textContent = '🚫 Hidden from PDF';
+                    card.querySelector('.toggle-container').after(label);
+                }
+            }
         }
         
         function removeAward(index) {
@@ -1086,99 +1471,26 @@
                 return;
             }
             
-            const apiKey = localStorage.getItem('openai_api_key');
-            if (!apiKey) {
-                showToast('⚠️ Please set your OpenAI API key in settings first', true);
-                return;
-            }
-            
             showToast('🤖 AI is tailoring your resume...');
             
             try {
-                // First save current resume
-                await saveResume();
-                
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const res = await fetch('/api/tailor', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-4o',
-                        messages: [
-                            {
-                                role: 'system',
-                                content: 'You are an elite resume tailoring specialist who creates perfectly tailored resumes while maintaining 100% truthfulness. You always return valid JSON without any markdown formatting or explanations.'
-                            },
-                            {
-                                role: 'user',
-                                content: `Your task is to create a perfectly tailored resume that matches the job description while maintaining 100% truthfulness.
-
-MASTER RESUME (Analyze this deeply):
-${JSON.stringify(resumeData, null, 2)}
-
-JOB DESCRIPTION:
-${jobDesc}
-
-TAILORING INSTRUCTIONS:
-- Select the most relevant projects and work experiences that align with job requirements
-- Reframe accomplishments using their keywords and terminology WITHOUT lying
-- Keep each project/experience description to EXACTLY 4 SENTENCES describing achievements, followed by a 5TH SENTENCE listing technologies/tools
-- Naturally weave in job description keywords throughout
-- Keep all information truthful - never fabricate experience or skills
-
-OUTPUT REQUIREMENTS:
-- Return ONLY valid JSON with the exact same structure as the input resume
-- Maintain all field names and data types
-- Ensure JSON is properly formatted (no markdown, no explanations, no code blocks)
-
-Return the complete tailored resume as valid JSON:`
-                            }
-                        ],
-                        temperature: 0.7
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_description: jobDesc })
                 });
                 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error?.message || 'API request failed');
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.error || 'Tailoring failed');
                 }
                 
-                const data = await response.json();
-                const tailoredResume = JSON.parse(data.choices[0].message.content.trim());
-                
-                // Save tailored resume
-                localStorage.setItem('tailoredResumeData', JSON.stringify(tailoredResume));
-                
+                resumeData = await res.json();
+                populateForm();
                 showToast('✨ Resume tailored successfully!');
-                
-                // Show success message and option to view
-                setTimeout(() => {
-                    if (confirm('Resume tailored! Would you like to view the tailored version?')) {
-                        window.open('tailored.html', '_blank');
-                    }
-                }, 500);
             } catch (e) {
                 console.error('Tailor error:', e);
                 showToast(e.message || 'Failed to tailor resume', true);
-            }
-        }
-        
-        // Copy to Tailored function
-        async function copyToTailored() {
-            try {
-                await saveResume(); // Save current changes first
-                localStorage.setItem('tailoredResumeData', localStorage.getItem('resumeData'));
-                showToast('✓ Copied to tailored resume!');
-                setTimeout(() => {
-                    if (confirm('Would you like to view the tailored resume?')) {
-                        window.open('tailored.html', '_blank');
-                    }
-                }, 500);
-            } catch (e) {
-                console.error('Copy error:', e);
-                showToast(e.message || 'Failed to copy', true);
             }
         }
         
@@ -1194,19 +1506,84 @@ Return the complete tailored resume as valid JSON:`
             };
             
             try {
-                localStorage.setItem('resumeData', JSON.stringify(resumeData));
-                showToast('✓ Resume saved!');
+                localStorage.setItem('tailoredResumeData', JSON.stringify(resumeData));
+                showToast('✓ Tailored resume saved!');
             } catch (e) {
                 console.error('Save error:', e);
                 showToast(e.message || 'Failed to save', true);
             }
         }
         
+        async function importFromMaster() {
+            // Confirm before importing
+            const confirmed = confirm('⚠️ This will replace ALL current data in your Tailored Resume with data from the Master Resume. This action cannot be undone.\n\nAre you sure you want to continue?');
+            
+            if (!confirmed) {
+                return;
+            }
+            
+            try {
+                // Fetch master resume data
+                const res = await fetch('/api/resume');
+                if (!res.ok) {
+                    throw new Error(`Failed to load master resume: ${res.status} ${res.statusText}`);
+                }
+                
+                const masterData = await res.json();
+                
+                // Ensure all experiences, projects, and awards have the enabled field
+                if (masterData.experience) {
+                    masterData.experience = masterData.experience.map(exp => ({
+                        ...exp,
+                        enabled: true
+                    }));
+                }
+                
+                if (masterData.projects) {
+                    masterData.projects = masterData.projects.map(proj => ({
+                        ...proj,
+                        enabled: true
+                    }));
+                }
+                
+                if (masterData.awards) {
+                    masterData.awards = masterData.awards.map(award => {
+                        if (typeof award === 'string') {
+                            return { name: award, enabled: true };
+                        }
+                        return { ...award, enabled: true };
+                    });
+                }
+                
+                // Initialize section order if not present
+                if (!masterData.sectionOrder) {
+                    masterData.sectionOrder = ['skills', 'experience', 'education', 'projects', 'awards'];
+                }
+                
+                // Replace current data with master data
+                resumeData = masterData;
+                
+                // Save the imported data to tailored resume
+                localStorage.setItem('tailoredResumeData', JSON.stringify(resumeData));
+                
+                // Refresh the form with new data
+                populateForm();
+                
+                showToast('✓ Successfully imported from Master Resume!');
+            } catch (e) {
+                console.error('Import error:', e);
+                showToast(e.message || 'Failed to import from Master Resume', true);
+            }
+        }
+        
         function downloadPDF() {
+            // Ensure section order is saved
+            if (!resumeData.sectionOrder) {
+                resumeData.sectionOrder = ['skills', 'experience', 'education', 'projects', 'awards'];
+            }
             saveResume().then(() => {
                 window.open('resume_pdf.html', '_blank');
-            });
-        }
+                window.open('/preview?type=tailored', '_blank');
             });
         }
         
